@@ -7,7 +7,7 @@ abstract class Application {
     var window : Window = Window()
 
     abstract fun init()
-    abstract fun update(dt : Double)
+    abstract fun update(dt : Float)
 
     fun run() {
         init()
@@ -18,7 +18,7 @@ abstract class Application {
             glClear(GL_COLOR_BUFFER_BIT)
             val dt = glfwGetTime() - time
             time = glfwGetTime()
-            update(dt)
+            update(dt.toFloat())
             glfwSwapBuffers(Window.glfwWindow)
         }
     }

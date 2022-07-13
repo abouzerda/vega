@@ -5,7 +5,6 @@ import org.lwjgl.glfw.GLFWErrorCallback
 import org.lwjgl.opengl.GL
 import org.lwjgl.system.MemoryUtil
 
-typealias GLFWWindow = Long
 
 class Window {
     companion object {

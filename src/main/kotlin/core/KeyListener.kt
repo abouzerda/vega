@@ -2,8 +2,6 @@ package core
 
 import org.lwjgl.glfw.GLFW.*
 
-const val KEY_RANGE = 348
-
 class KeyListener {
     companion object {
         private var keys : Array<Boolean> = Array(KEY_RANGE) { false }

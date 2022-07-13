@@ -8,9 +8,10 @@ class Game : Application() {
 
     override fun init() {
         activeScene.init()
+        activeScene.start()
     }
 
-    override fun update(dt: Double) {
+    override fun update(dt: Float) {
         activeScene.update(dt)
     }
 }
