@@ -5,10 +5,9 @@ import core.GameObject
 import java.util.*
 
 class Renderer {
-    private val MAX_BATCH_SIZE = 1000
     private val batches: MutableList<Batch>
     fun add(go: GameObject) {
-        val spr: SpriteRenderer = go.getComponent(SpriteRenderer::class.java)
+        val spr: SpriteRenderer? = go.getComponent(SpriteRenderer::class.java)
         if (spr != null) {
             add(spr)
         }

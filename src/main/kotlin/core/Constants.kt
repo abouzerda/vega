@@ -1,7 +1,5 @@
 package core
 
-typealias GLFWWindow = Long
-
 const val KEY_RANGE = 348
 
 const val TILE_SIZE = 32.0f

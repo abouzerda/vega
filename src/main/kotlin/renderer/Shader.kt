@@ -2,28 +2,51 @@ package renderer
 
 import org.joml.*
 import org.lwjgl.BufferUtils
-import org.lwjgl.opengl.GL33.*
+import org.lwjgl.opengl.GL11.GL_FALSE
+import org.lwjgl.opengl.GL20.*
+import utils.Utils
 
 
-class Shader {
+class Shader(private val filepath: String = "/default.glsl") {
     var programId = 0
     var vertexShaderId = 0
     var fragmentShaderId = 0
-    var active : Boolean = false
+    var vertexShaderCode: String = ""
+    var fragmentShaderCode: String = ""
+    var active: Boolean = false
 
     init {
         programId = glCreateProgram();
         if (programId == 0) {
             throw Exception("Could not create Shader")
         }
+
     }
 
-    fun compile(vertexShaderCode: String, fragmentShaderCode: String) {
+    fun parse() {
+        val source = Utils.loadResource(filepath)
+        val shaderSources = source.split("(#type)( )+([a-zA-Z]+)".toRegex())
+        var index = source.indexOf("#type") + "#type ".length
+        var eol = source.indexOf("\n", index)
+        val firstDirective = source.substring(index, eol).trim()
+        index = source.indexOf("#type", eol) + "#type ".length
+        eol = source.indexOf("\n", index)
+        val secondDirective = source.substring(index, eol).trim()
+        if (firstDirective == "vertex" && secondDirective == "fragment") {
+            vertexShaderCode = shaderSources[1]
+            fragmentShaderCode = shaderSources[2]
+        } else if (firstDirective == "fragment" && secondDirective == "vertex") {
+            vertexShaderCode = shaderSources[2]
+            fragmentShaderCode = shaderSources[1]
+        }
+    }
+
+    fun compile() {
         vertexShaderId = compile(vertexShaderCode, GL_VERTEX_SHADER)
         fragmentShaderId = compile(fragmentShaderCode, GL_FRAGMENT_SHADER)
     }
 
-    fun compile(shaderCode: String, shaderType: Int): Int {
+    private fun compile(shaderCode: String, shaderType: Int): Int {
         val shaderId: Int = glCreateShader(shaderType)
         if (shaderId == 0) {
             throw Exception("Error creating shader. Type: $shaderType")
@@ -55,7 +78,7 @@ class Shader {
     }
 
     fun bind() {
-        if(!active) {
+        if (!active) {
             glUseProgram(programId)
             active = true
         }
@@ -119,9 +142,15 @@ class Shader {
         glUniform1i(varLocation, value)
     }
 
-    fun uploadTexture(varName : String, slot : Int) {
+    fun uploadTexture(varName: String, slot: Int) {
         val varLocation = glGetUniformLocation(programId, varName)
         bind()
         glUniform1i(varLocation, slot)
+    }
+
+    fun uploadIntArray(varName: String, array: IntArray) {
+        val varLocation: Int = glGetUniformLocation(programId, varName)
+        bind()
+        glUniform1iv(varLocation, array)
     }
 }

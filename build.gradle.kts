@@ -8,7 +8,7 @@ version = "1.0-SNAPSHOT"
 
 val lwjglVersion = "3.2.3"
 val jomlVersion = "1.10.2"
-val lwjglNatives = "natives-windows"
+val lwjglNatives = "natives-linux"
 
 application {
     mainClassName = "MainKt"
@@ -20,6 +20,7 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
+    implementation("junit", "junit", "4.13.2")
 
     implementation(platform("org.lwjgl:lwjgl-bom:$lwjglVersion"))
 
