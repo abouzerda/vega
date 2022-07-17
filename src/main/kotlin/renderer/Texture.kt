@@ -6,8 +6,8 @@ import org.lwjgl.stb.STBImage.stbi_image_free
 import org.lwjgl.stb.STBImage.stbi_load
 
 
-class Texture(val filepath: String) {
-    val texID: Int = glGenTextures()
+class Texture(filepath: String) {
+    private val texID: Int = glGenTextures()
 
     init {
         glBindTexture(GL_TEXTURE_2D, texID)
