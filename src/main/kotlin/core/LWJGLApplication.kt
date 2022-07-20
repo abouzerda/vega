@@ -8,8 +8,8 @@ open class LWJGLApplication {
     private val logger: Logger = Logger.getLogger(javaClass.name)
 
     init {
-        GLFWWindow.init()
         this.logger.info("LWJGL ${Version.getVersion()}!")
+        GLFWWindow.init()
     }
 
     fun run() {

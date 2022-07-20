@@ -9,11 +9,14 @@ import imgui.enums.ImGuiBackendFlags
 import imgui.enums.ImGuiConfigFlags
 import imgui.gl3.ImGuiImplGl3
 import org.lwjgl.glfw.GLFW.*
+import java.util.logging.Logger
 
 class ImGUI(private var glfwWindowHandle: Long) {
+    private val logger: Logger = Logger.getLogger(javaClass.name)
     private val lwjglRenderer: ImGuiImplGl3 = ImGuiImplGl3()
 
     fun init() {
+        this.logger.info("ImGui ${ImGui.getVersion()}!")
         ImGui.createContext()
         with(ImGui.getIO()) {
             /* We don't want to save .ini file */
