@@ -2,7 +2,10 @@ package io
 
 import core.GLFWWindow.height
 import core.GLFWWindow.width
+import imgui.ImFontAtlas
+import imgui.ImFontConfig
 import imgui.ImGui
+import imgui.ImGuiFreeType
 import imgui.callbacks.ImStrConsumer
 import imgui.callbacks.ImStrSupplier
 import imgui.enums.ImGuiBackendFlags
@@ -40,6 +43,18 @@ class ImGUI(private var glfwWindowHandle: Long) {
                     return clipboardString ?: ""
                 }
             })
+            val fontAtlas: ImFontAtlas = fonts
+            /* Natively allocated object, should be explicitly destroyed */
+            val fontConfig = ImFontConfig()
+            /* Glyphs could be added per-font as well as per config used globally like here */
+            fontConfig.glyphRanges = fontAtlas.glyphRangesDefault
+            /* Fonts merge example */
+            fontConfig.pixelSnapH = true
+            /* Fonts from file/memory example */
+            fontAtlas.addFontFromFileTTF(IMGUI_FONT_FILE, IMGUI_FONT_SIZE, fontConfig)
+            /* After all fonts were added we don't need this config more */
+            fontConfig.destroy()
+            ImGuiFreeType.buildFontAtlas(fontAtlas)
         }
         /* Set up key input callbacks */
         glfwSetKeyCallback(glfwWindowHandle, KeyListener::imGuiKeyCallback)
