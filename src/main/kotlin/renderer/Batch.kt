@@ -46,9 +46,9 @@ class Batch(batchSize: Int = MAX_BATCH_SIZE) {
         glEnableVertexAttribArray(3)
     }
 
-    fun addSprite(sprite: SpriteRenderer) {
-        sprites.add(sprite)
-        if (sprite.texture != null && !textures.contains(sprite.texture)) textures.add(sprite.texture!!)
+    fun addSprite(spriteRenderer: SpriteRenderer) {
+        sprites.add(spriteRenderer)
+        if (spriteRenderer.sprite.texture != null && !textures.contains(spriteRenderer.sprite.texture)) textures.add(spriteRenderer.sprite.texture!!)
         loadVertexProperties(sprites.size - 1)
     }
 
@@ -83,16 +83,16 @@ class Batch(batchSize: Int = MAX_BATCH_SIZE) {
     }
 
     private fun loadVertexProperties(index: Int) {
-        val sprite = sprites[index]
+        val spriteRenderer = sprites[index]
         /* Find offset within array (4 vertices per sprite) */
         var offset = index * 4 * VERTEX_SIZE
-        val color = sprite.color
-        val texCoords: List<Vector2f> = sprite.texCoords
+        val color = spriteRenderer.color
+        val texCoords: Array<Vector2f> = spriteRenderer.sprite.texCoords
 
         var texId = 0
-        if (sprite.texture != null) {
+        if (spriteRenderer.sprite.texture != null) {
             for (i in textures.indices) {
-                if (textures[i] == sprite.texture) {
+                if (textures[i] == spriteRenderer.sprite.texture) {
                     texId = i + 1
                     break
                 }
@@ -111,9 +111,9 @@ class Batch(batchSize: Int = MAX_BATCH_SIZE) {
             }
             /* Load position */
             vertices[offset] =
-                sprite.gameObject?.transform?.position?.x!! + xAdd * sprite.gameObject?.transform?.scale?.x!!
+                spriteRenderer.gameObject?.transform?.position?.x!! + xAdd * spriteRenderer.gameObject?.transform?.scale?.x!!
             vertices[offset + 1] =
-                sprite.gameObject?.transform?.position?.y!! + yAdd * sprite.gameObject?.transform?.scale?.y!!
+                spriteRenderer.gameObject?.transform?.position?.y!! + yAdd * spriteRenderer.gameObject?.transform?.scale?.y!!
             /* Load color */
             vertices[offset + 2] = color.x
             vertices[offset + 3] = color.y

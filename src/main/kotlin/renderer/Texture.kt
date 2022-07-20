@@ -7,6 +7,8 @@ import org.lwjgl.stb.STBImage.*
 
 class Texture(filepath: String) {
     private val texID: Int = glGenTextures()
+    val width: Int
+    val height: Int
 
     init {
         glBindTexture(GL_TEXTURE_2D, texID)
@@ -20,6 +22,8 @@ class Texture(filepath: String) {
         stbi_set_flip_vertically_on_load(true);
         val image = stbi_load(filepath, width, height, channels, 0)
         if (image != null) {
+            this.width = width.get(0)
+            this.height = height.get(0)
             val mode = when(channels.get(0)) {
                 3 -> GL_RGB
                 4 -> GL_RGBA

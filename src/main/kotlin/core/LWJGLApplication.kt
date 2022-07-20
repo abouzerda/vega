@@ -9,10 +9,10 @@ open class LWJGLApplication {
 
     init {
         GLFWWindow.init()
+        this.logger.info("LWJGL ${Version.getVersion()}!")
     }
 
     fun run() {
-        this.logger.info("LWJGL ${Version.getVersion()}!")
         var dt: Float? = null
         while (!GLFWWindow.shouldClose()) {
             val time = GLFW.glfwGetTime()
