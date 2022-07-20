@@ -2,7 +2,7 @@ package core
 
 import org.joml.Vector2f
 
-class GameObject(val name: String, var transform: Transform = Transform()) {
+class GameObject(val name: String, var transform: Transform = Transform(), var zIndex: Int = 0) {
     private val components = mutableListOf<Component>()
     fun <T : Component> getComponent(componentClass: Class<T>): T? {
         val component = components.find { c -> componentClass.isAssignableFrom(c.javaClass) }

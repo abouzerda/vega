@@ -29,6 +29,9 @@ class SpriteRenderer(
             async()
         }
 
+    init {
+        async()
+    }
 
     override fun start() {
     }

@@ -16,17 +16,18 @@ class Renderer {
     private fun add(sprite: SpriteRenderer) {
         var added = false
         for (batch in batches) {
-            if (batch.hasRoom()) {
+            if (batch.hasRoom() && batch.zIndex == sprite.gameObject.zIndex) {
                 batch.addSprite(sprite)
                 added = true
                 break
             }
         }
         if (!added) {
-            val newBatch = Batch(MAX_BATCH_SIZE)
+            val newBatch = Batch(MAX_BATCH_SIZE, sprite.gameObject.zIndex)
             newBatch.start()
             batches.add(newBatch)
             newBatch.addSprite(sprite)
+            batches.sort()
         }
     }
 

@@ -7,7 +7,10 @@ import org.lwjgl.opengl.*
 import org.lwjgl.opengl.GL20.*
 import org.lwjgl.opengl.GL30.glBindVertexArray
 
-class Batch(batchSize: Int = MAX_BATCH_SIZE) {
+class Batch(
+    batchSize: Int = MAX_BATCH_SIZE,
+    var zIndex: Int
+) : Comparable<Batch> {
     private var sprites: MutableList<SpriteRenderer> = mutableListOf()
     private var textures: MutableList<Texture> = mutableListOf()
     private val texSlots: IntArray = IntArray(8) { it }
@@ -159,4 +162,5 @@ class Batch(batchSize: Int = MAX_BATCH_SIZE) {
     }
 
     fun hasRoom(): Boolean = this.sprites.size < MAX_BATCH_SIZE
+    override fun compareTo(other: Batch): Int = zIndex.compareTo(other.zIndex)
 }

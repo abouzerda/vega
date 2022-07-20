@@ -5,7 +5,6 @@ import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.glfw.GLFWErrorCallback
 import org.lwjgl.opengl.GL
 import org.lwjgl.opengl.GL11.*
-import org.lwjgl.opengl.GL33
 import org.lwjgl.system.MemoryUtil.NULL
 import scene.MainScene
 import java.util.logging.Logger
@@ -50,13 +49,17 @@ object GLFWWindow {
         glfwSwapInterval(1)
 
         GL.createCapabilities()
+
+        /* Enable Alpha blending */
+        glEnable(GL_BLEND)
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA)
     }
 
     internal fun update(dt: Float?) {
         /* Poll events */
         glfwPollEvents()
         /* Clear screen */
-        glClearColor(0.7f, 0.1f, 0.2f, 0f)
+        glClearColor(1f, 1f, 1f, 1f)
         glClear(GL_COLOR_BUFFER_BIT)
         /* Update current scene */
         if (dt != null) this.currentScene.update(dt)
