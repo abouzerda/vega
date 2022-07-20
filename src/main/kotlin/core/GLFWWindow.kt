@@ -26,7 +26,7 @@ object GLFWWindow {
         this.currentScene = scene
     }
 
-    internal fun shouldClose() : Boolean = glfwWindowShouldClose(glfwWindowHandle)
+    internal fun shouldClose(): Boolean = glfwWindowShouldClose(glfwWindowHandle)
 
     internal fun init() {
         /* Set up error callback */
@@ -45,9 +45,9 @@ object GLFWWindow {
         glfwSetCursorPosCallback(glfwWindowHandle, MouseListener::cursorPositionCallback)
         glfwSetCursorEnterCallback(glfwWindowHandle, MouseListener::cursorEnterCallback)
         glfwSetScrollCallback(glfwWindowHandle, MouseListener::scrollCallback)
-        glfwSetWindowSizeCallback(glfwWindowHandle) { w: Long, newWidth: Int, newHeight: Int ->
-            width = width
-            height = height
+        glfwSetWindowSizeCallback(glfwWindowHandle) { _: Long, newWidth: Int, newHeight: Int ->
+            width = newWidth
+            height = newHeight
         }
         /* Make OpenGL the current context */
         glfwMakeContextCurrent(glfwWindowHandle)
