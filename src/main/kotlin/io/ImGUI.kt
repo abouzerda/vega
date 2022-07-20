@@ -15,34 +15,35 @@ class ImGUI(private var glfwWindowHandle: Long) {
 
     fun init() {
         ImGui.createContext()
-        val io = ImGui.getIO()
-        /* We don't want to save .ini file */
-        io.iniFilename = null
-        /* Navigation with keyboard */
-        io.configFlags = ImGuiConfigFlags.NavEnableKeyboard
-        /* Mouse cursors to display while resizing windows etc. */
-        io.backendFlags = ImGuiBackendFlags.HasMouseCursors
-        io.backendPlatformName = "imgui_java_impl_glfw"
-        /* Set keyboard mapping */
-        io.setKeyMap(keyMap)
+        with(ImGui.getIO()) {
+            /* We don't want to save .ini file */
+            iniFilename = null
+            /* Navigation with keyboard */
+            configFlags = ImGuiConfigFlags.NavEnableKeyboard
+            /* Mouse cursors to display while resizing windows etc. */
+            backendFlags = ImGuiBackendFlags.HasMouseCursors
+            backendPlatformName = "imgui_java_impl_glfw"
+            /* Set keyboard mapping */
+            setKeyMap(keyMap)
+            /* Set up clipboard input callbacks */
+            setSetClipboardTextFn(object : ImStrConsumer() {
+                override fun accept(s: String) {
+                    glfwSetClipboardString(glfwWindowHandle, s)
+                }
+            })
+            setGetClipboardTextFn(object : ImStrSupplier() {
+                override fun get(): String {
+                    val clipboardString = glfwGetClipboardString(glfwWindowHandle)
+                    return clipboardString ?: ""
+                }
+            })
+        }
         /* Set up key input callbacks */
         glfwSetKeyCallback(glfwWindowHandle, KeyListener::imGuiKeyCallback)
         glfwSetCharCallback(glfwWindowHandle, KeyListener::imGuiCharCallback)
         /* Set up mouse input callbacks */
         glfwSetMouseButtonCallback(glfwWindowHandle, MouseListener::imGuiMouseButtonCallback)
         glfwSetScrollCallback(glfwWindowHandle, MouseListener::imGuiScrollCallback)
-        /* Set up clipboard input callbacks */
-        io.setSetClipboardTextFn(object : ImStrConsumer() {
-            override fun accept(s: String) {
-                glfwSetClipboardString(glfwWindowHandle, s)
-            }
-        })
-        io.setGetClipboardTextFn(object : ImStrSupplier() {
-            override fun get(): String {
-                val clipboardString = glfwGetClipboardString(glfwWindowHandle)
-                return clipboardString ?: ""
-            }
-        })
         lwjglRenderer.init("#version 400 core")
     }
 
@@ -61,11 +62,12 @@ class ImGUI(private var glfwWindowHandle: Long) {
         val mousePosX = doubleArrayOf(0.0)
         val mousePosY = doubleArrayOf(0.0)
         glfwGetCursorPos(glfwWindowHandle, mousePosX, mousePosY)
-        val io = ImGui.getIO()
-        io.setDisplaySize(winWidth[0], winHeight[0])
-        io.setDisplayFramebufferScale(1f, 1f)
-        io.setMousePos(mousePosX[0].toFloat(), mousePosY[0].toFloat())
-        io.deltaTime = dt
+        with(ImGui.getIO()) {
+            setDisplaySize(winWidth[0], winHeight[0])
+            setDisplayFramebufferScale(1f, 1f)
+            setMousePos(mousePosX[0].toFloat(), mousePosY[0].toFloat())
+            deltaTime = dt
+        }
         /* Update the mouse cursor */
         val imguiCursor = ImGui.getMouseCursor()
         glfwSetCursor(glfwWindowHandle, mouseCursors[imguiCursor])
