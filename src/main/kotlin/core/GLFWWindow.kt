@@ -1,6 +1,8 @@
 package core
 
-import ImGuiLayer
+import io.ImGUI
+import io.KeyListener
+import io.MouseListener
 import org.lwjgl.glfw.Callbacks.glfwFreeCallbacks
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.glfw.GLFWErrorCallback
@@ -18,7 +20,7 @@ object GLFWWindow {
     private const val title = ""
 
     private var glfwWindowHandle = 0L
-    private lateinit var imGuiLayer: ImGuiLayer
+    private lateinit var imGui: ImGUI
 
     internal var currentScene: Scene = MainScene()
 
@@ -39,12 +41,12 @@ object GLFWWindow {
         glfwWindowHandle = glfwCreateWindow(width, height, title, NULL, NULL)
         if (glfwWindowHandle == NULL) logger.severe("Failed to create GLFW window!")
         /* Set up key input callbacks */
-        glfwSetKeyCallback(glfwWindowHandle, KeyListener::keyCallback)
+        glfwSetKeyCallback(glfwWindowHandle, KeyListener::sceneKeyCallback)
         /* Set up mouse input callbacks */
-        glfwSetMouseButtonCallback(glfwWindowHandle, MouseListener::mouseButtonCallback)
-        glfwSetCursorPosCallback(glfwWindowHandle, MouseListener::cursorPositionCallback)
-        glfwSetCursorEnterCallback(glfwWindowHandle, MouseListener::cursorEnterCallback)
-        glfwSetScrollCallback(glfwWindowHandle, MouseListener::scrollCallback)
+        glfwSetMouseButtonCallback(glfwWindowHandle, MouseListener::sceneMouseButtonCallback)
+        glfwSetCursorPosCallback(glfwWindowHandle, MouseListener::sceneCursorPositionCallback)
+        glfwSetCursorEnterCallback(glfwWindowHandle, MouseListener::sceneCursorEnterCallback)
+        glfwSetScrollCallback(glfwWindowHandle, MouseListener::sceneScrollCallback)
         glfwSetWindowSizeCallback(glfwWindowHandle) { _: Long, newWidth: Int, newHeight: Int ->
             width = newWidth
             height = newHeight
@@ -60,8 +62,8 @@ object GLFWWindow {
         glEnable(GL_BLEND)
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA)
 
-        imGuiLayer = ImGuiLayer(glfwWindowHandle)
-        imGuiLayer.initImGui()
+        imGui = ImGUI(glfwWindowHandle)
+        imGui.init()
     }
 
     internal fun update(dt: Float?) {
@@ -73,7 +75,7 @@ object GLFWWindow {
         /* Update current scene */
         if (dt != null) {
             this.currentScene.update(dt)
-            this.imGuiLayer.update(dt)
+            this.imGui.update(dt)
         }
         glfwSwapBuffers(glfwWindowHandle)
     }

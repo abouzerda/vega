@@ -1,4 +1,4 @@
-package core
+package io
 
 import org.lwjgl.glfw.GLFW.*
 import java.util.*

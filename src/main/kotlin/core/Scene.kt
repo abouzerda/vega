@@ -1,5 +1,7 @@
 package core
 
+import io.KeyEvent
+import io.MouseEvent
 import org.joml.Vector2f
 import renderer.Renderer
 
