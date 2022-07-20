@@ -48,15 +48,27 @@ class Batch(batchSize: Int = MAX_BATCH_SIZE) {
 
     fun addSprite(spriteRenderer: SpriteRenderer) {
         sprites.add(spriteRenderer)
-        if (spriteRenderer.sprite.texture != null && !textures.contains(spriteRenderer.sprite.texture)) textures.add(spriteRenderer.sprite.texture!!)
+        if (spriteRenderer.sprite.texture != null && !textures.contains(spriteRenderer.sprite.texture)) textures.add(
+            spriteRenderer.sprite.texture!!
+        )
         loadVertexProperties(sprites.size - 1)
     }
 
     fun render() {
-        /* For now, we will rebuffer all data every frame */
-        glBindBuffer(GL_ARRAY_BUFFER, vboID)
-        glBufferSubData(GL_ARRAY_BUFFER, 0, vertices)
-
+        /* Check if data needs to be re-buffered */
+        var rebufferData = false
+        for (i in 0 until sprites.size) {
+            val sprite = sprites[i]
+            if (!sprite.syncedGPU) {
+                loadVertexProperties(i)
+                sprite.sync()
+                rebufferData = true
+            }
+        }
+        if (rebufferData) {
+            glBindBuffer(GL_ARRAY_BUFFER, vboID)
+            glBufferSubData(GL_ARRAY_BUFFER, 0, vertices)
+        }
         /* Use shader */
         shader.bind()
         shader.uploadMat4f("uProjection", GLFWWindow.currentScene.camera.getProjectionMatrix())
@@ -102,18 +114,16 @@ class Batch(batchSize: Int = MAX_BATCH_SIZE) {
         var xAdd = 1.0f
         var yAdd = 1.0f
         for (i in 0..3) {
-            if (i == 1) {
-                yAdd = 0.0f
-            } else if (i == 2) {
-                xAdd = 0.0f
-            } else if (i == 3) {
-                yAdd = 1.0f
+            when (i) {
+                1 -> yAdd = 0.0f
+                2 -> xAdd = 0.0f
+                3 -> yAdd = 1.0f
             }
             /* Load position */
             vertices[offset] =
-                spriteRenderer.gameObject?.transform?.position?.x!! + xAdd * spriteRenderer.gameObject?.transform?.scale?.x!!
+                spriteRenderer.gameObject.transform.position.x + xAdd * spriteRenderer.gameObject.transform.scale.x
             vertices[offset + 1] =
-                spriteRenderer.gameObject?.transform?.position?.y!! + yAdd * spriteRenderer.gameObject?.transform?.scale?.y!!
+                spriteRenderer.gameObject.transform.position.y + yAdd * spriteRenderer.gameObject.transform.scale.y
             /* Load color */
             vertices[offset + 2] = color.x
             vertices[offset + 3] = color.y
@@ -130,7 +140,7 @@ class Batch(batchSize: Int = MAX_BATCH_SIZE) {
 
     private fun generateIndices(): IntArray {
         return IntArray(6 * MAX_BATCH_SIZE).apply {
-            for (i in 1..MAX_BATCH_SIZE) loadElementIndices(this, i - 1)
+            for (i in 0 until MAX_BATCH_SIZE) loadElementIndices(this, i)
         }
     }
 
