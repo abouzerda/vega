@@ -9,7 +9,6 @@ object KeyListener {
         return keys[keyCode]
     }
 
-
     internal fun keyCallback(window: Long, key: Int, scancode: Int, action: Int, mods: Int) {
         val keyEvent = KeyEvent(key, glfwGetKeyName(key, scancode) ?: "", mods)
         when (action) {

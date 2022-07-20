@@ -8,6 +8,7 @@ version = "1.0-SNAPSHOT"
 
 val lwjglVersion = "3.2.3"
 val jomlVersion = "1.10.2"
+val imguiVersion = "1.76-0.9"
 val lwjglNatives = "natives-linux"
 
 application {
@@ -15,6 +16,7 @@ application {
 }
 
 repositories {
+    jcenter()
     mavenCentral()
 }
 
@@ -38,7 +40,12 @@ dependencies {
     runtimeOnly("org.lwjgl", "lwjgl-openal", classifier = lwjglNatives)
     runtimeOnly("org.lwjgl", "lwjgl-opengl", classifier = lwjglNatives)
     runtimeOnly("org.lwjgl", "lwjgl-stb", classifier = lwjglNatives)
+
     implementation("org.joml", "joml", jomlVersion)
+
+    implementation("io.imgui.java", "binding", imguiVersion)
+    implementation("io.imgui.java", "lwjgl3", imguiVersion)
+    runtimeOnly("io.imgui.java", "natives-linux", imguiVersion)
 }
 
 tasks {

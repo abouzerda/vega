@@ -6,6 +6,7 @@ import java.util.*
 object MouseListener {
     var cursorPosX: Double = 0.0
     var cursorPosY: Double = 0.0
+
     internal fun cursorPositionCallback(window: Long, xPos: Double, yPos: Double) {
         cursorPosX = xPos
         cursorPosY = yPos

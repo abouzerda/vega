@@ -4,7 +4,6 @@ import component.Sprite
 import component.SpriteRenderer
 import core.*
 import org.joml.Vector2f
-import org.lwjgl.glfw.GLFW
 import utils.Assets
 import java.util.logging.Logger
 
