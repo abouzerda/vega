@@ -47,7 +47,9 @@ class ImGUI(private var glfwWindowHandle: Long) {
         /* Set up mouse input callbacks */
         glfwSetMouseButtonCallback(glfwWindowHandle, MouseListener::imGuiMouseButtonCallback)
         glfwSetScrollCallback(glfwWindowHandle, MouseListener::imGuiScrollCallback)
-        lwjglRenderer.init("#version 400 core")
+
+        this.logger.info("GLSL ${GLSL_VERSION.removePrefix("#")}!")
+        lwjglRenderer.init(GLSL_VERSION)
     }
 
     fun update(dt: Float) {

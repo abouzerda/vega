@@ -4,6 +4,8 @@ import imgui.enums.ImGuiKey
 import imgui.enums.ImGuiMouseCursor
 import org.lwjgl.glfw.GLFW.*
 
+const val GLSL_VERSION: String = "#version 400 core"
+
 val keyMap = IntArray(ImGuiKey.COUNT).apply {
     set(ImGuiKey.Tab, GLFW_KEY_TAB)
     set(ImGuiKey.LeftArrow, GLFW_KEY_LEFT)

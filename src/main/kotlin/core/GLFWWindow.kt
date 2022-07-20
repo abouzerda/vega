@@ -31,7 +31,7 @@ object GLFWWindow {
     internal fun shouldClose(): Boolean = glfwWindowShouldClose(glfwWindowHandle)
 
     internal fun init() {
-        this.logger.info("GLFW ${glfwGetVersionString()}!")
+        this.logger.info("GLFW ${glfwGetVersionString().split(' ').first()}!")
         /* Set up error callback */
         GLFWErrorCallback.createPrint(System.err).set()
         /* Initialize GLFW */
@@ -58,7 +58,7 @@ object GLFWWindow {
         glfwSwapInterval(1)
 
         GL.createCapabilities()
-        this.logger.info("OpenGL ${glGetString(GL_VERSION)}!")
+        this.logger.info("OpenGL ${glGetString(GL_VERSION)?.split(' ')?.first()}!")
 
         /* Enable Alpha blending */
         glEnable(GL_BLEND)
