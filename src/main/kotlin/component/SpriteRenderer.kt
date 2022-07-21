@@ -40,6 +40,10 @@ class SpriteRenderer(
         transform = gameObject.transform.deepCopy()
     }
 
+    override fun imgui() {
+
+    }
+
     private fun async() {
         syncedGPU = false
     }

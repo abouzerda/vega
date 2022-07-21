@@ -53,5 +53,5 @@ abstract class Scene {
         imgui()
     }
 
-    abstract fun imgui()
+    open fun imgui() {}
 }

@@ -6,5 +6,5 @@ abstract class Component {
 
     abstract fun start()
     abstract fun update(dt : Float)
-    fun imgui() {}
+    open fun imgui() {}
 }
