@@ -2,11 +2,12 @@ package component
 
 import core.Component
 import core.Transform
+import imgui.ImGui
 import org.joml.Vector4f
 
 class SpriteRenderer(
     color: Vector4f = Vector4f(1f, 1f, 1f, 1f),
-    sprite: Sprite = Sprite(null)
+    sprite: Sprite = Sprite()
 ) : Component() {
     var syncedGPU = true
     var transform: Transform = Transform()
@@ -41,7 +42,11 @@ class SpriteRenderer(
     }
 
     override fun imgui() {
-
+        val colors = FloatArray(4) { color[it] }
+        if (ImGui.colorPicker4("", colors)) {
+            this.color.set(colors)
+            async()
+        }
     }
 
     private fun async() {
