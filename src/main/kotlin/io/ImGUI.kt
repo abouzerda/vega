@@ -1,5 +1,6 @@
 package io
 
+import core.GLFWWindow
 import core.GLFWWindow.height
 import core.GLFWWindow.width
 import imgui.ImFontAtlas
@@ -23,12 +24,12 @@ class ImGUI(private var glfwWindowHandle: Long) {
         ImGui.createContext()
         with(ImGui.getIO()) {
             /* We don't want to save .ini file */
-            iniFilename = null
+            iniFilename = IMGUI_INI_FILE
             /* Navigation with keyboard */
             configFlags = ImGuiConfigFlags.NavEnableKeyboard
             /* Mouse cursors to display while resizing windows etc. */
             backendFlags = ImGuiBackendFlags.HasMouseCursors
-            backendPlatformName = "imgui_java_impl_glfw"
+            backendPlatformName = IMGUI_PLATFORM_NAME
             /* Set keyboard mapping */
             setKeyMap(keyMap)
             /* Set up clipboard input callbacks */
@@ -70,6 +71,7 @@ class ImGUI(private var glfwWindowHandle: Long) {
     fun update(dt: Float) {
         startFrame(dt)
         ImGui.newFrame()
+        GLFWWindow.currentScene.sceneImgui()
         ImGui.showDemoWindow()
         ImGui.render()
         endFrame()

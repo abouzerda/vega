@@ -1,15 +1,18 @@
 package core
 
+import imgui.ImGui
 import io.KeyEvent
 import io.MouseEvent
 import org.joml.Vector2f
 import renderer.Renderer
+import java.util.*
 
 abstract class Scene {
     protected var renderer: Renderer = Renderer()
     var camera: Camera = Camera(Vector2f())
     protected var gameObjects = mutableListOf<GameObject>()
     protected var active = false
+    protected var activeGameObject: Optional<GameObject> = Optional.empty()
 
     /* Key input event handlers */
     var onKeyPress: ((KeyEvent) -> Unit) = {}
@@ -30,6 +33,7 @@ abstract class Scene {
         }
         active = true
     }
+
     fun addGameObject(gameObject: GameObject) {
         gameObjects.add(gameObject)
         if (active) {
@@ -40,4 +44,14 @@ abstract class Scene {
 
     abstract fun init()
     abstract fun update(dt: Float)
+    fun sceneImgui() {
+        activeGameObject.ifPresent {
+            ImGui.begin("Inspector")
+            it.imgui()
+            ImGui.end()
+        }
+        imgui()
+    }
+
+    abstract fun imgui()
 }

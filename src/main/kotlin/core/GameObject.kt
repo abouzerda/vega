@@ -1,7 +1,5 @@
 package core
 
-import org.joml.Vector2f
-
 class GameObject(val name: String, var transform: Transform = Transform(), var zIndex: Int = 0) {
     private val components = mutableListOf<Component>()
     fun <T : Component> getComponent(componentClass: Class<T>): T? {
@@ -21,4 +19,6 @@ class GameObject(val name: String, var transform: Transform = Transform(), var z
     fun start() = components.forEach { it.start() }
 
     fun update(dt: Float) = components.forEach { it.update(dt) }
+
+    fun imgui() = components.forEach { it.imgui() }
 }

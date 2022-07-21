@@ -3,6 +3,7 @@ package scene
 import component.Sprite
 import component.SpriteRenderer
 import core.*
+import imgui.ImGui
 import org.joml.Vector2f
 import utils.Assets
 import java.util.logging.Logger
@@ -27,5 +28,11 @@ class MainScene : Scene() {
             gameObject.update(dt)
         }
         this.renderer.render()
+    }
+
+    override fun imgui() {
+        ImGui.begin("Test Window")
+        ImGui.text("Some random Text")
+        ImGui.end()
     }
 }
