@@ -9,7 +9,7 @@ version = "1.0-SNAPSHOT"
 val lwjglVersion = "3.2.3"
 val lwjglNatives = "natives-linux"
 val jomlVersion = "1.10.2"
-val imguiVersion = "1.76-0.9"
+val imguiVersion = "1.77-0.17.1"
 val gsonVersion = "2.9.0"
 
 application {

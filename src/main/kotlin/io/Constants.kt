@@ -1,7 +1,7 @@
 package io
 
-import imgui.enums.ImGuiKey
-import imgui.enums.ImGuiMouseCursor
+import imgui.flag.ImGuiKey
+import imgui.flag.ImGuiMouseCursor
 import org.lwjgl.glfw.GLFW.*
 
 const val GLSL_VERSION: String = "#version 400 core"

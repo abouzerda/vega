@@ -7,11 +7,11 @@ import imgui.ImFontAtlas
 import imgui.ImFontConfig
 import imgui.ImGui
 import imgui.ImGuiFreeType
-import imgui.callbacks.ImStrConsumer
-import imgui.callbacks.ImStrSupplier
-import imgui.enums.ImGuiBackendFlags
-import imgui.enums.ImGuiConfigFlags
+import imgui.callback.ImStrConsumer
+import imgui.callback.ImStrSupplier
+import imgui.flag.*
 import imgui.gl3.ImGuiImplGl3
+import imgui.type.ImBoolean
 import org.lwjgl.glfw.GLFW.*
 import java.util.logging.Logger
 
@@ -26,9 +26,11 @@ class ImGuiAdapter(private var glfwWindowHandle: Long) {
             /* We don't want to save .ini file */
             iniFilename = IMGUI_INI_FILE
             /* Navigation with keyboard */
-            configFlags = ImGuiConfigFlags.NavEnableKeyboard
+            addConfigFlags(ImGuiConfigFlags.NavEnableKeyboard)
+            /* Enable window docking */
+            addConfigFlags(ImGuiConfigFlags.DockingEnable)
             /* Mouse cursors to display while resizing windows etc. */
-            backendFlags = ImGuiBackendFlags.HasMouseCursors
+            addBackendFlags(ImGuiBackendFlags.HasMouseCursors)
             backendPlatformName = IMGUI_PLATFORM_NAME
             /* Set keyboard mapping */
             setKeyMap(keyMap)
@@ -71,9 +73,11 @@ class ImGuiAdapter(private var glfwWindowHandle: Long) {
     fun update(dt: Float) {
         startFrame(dt)
         ImGui.newFrame()
+        setupDockspace()
         //showFPS(dt)
         GLFWWindow.currentScene.imgui()
         //ImGui.showDemoWindow()
+        ImGui.end()
         ImGui.render()
         endFrame()
     }
@@ -99,5 +103,19 @@ class ImGuiAdapter(private var glfwWindowHandle: Long) {
 
     private fun endFrame() {
         lwjglRenderer.render(ImGui.getDrawData())
+    }
+
+    private fun setupDockspace() {
+        var windowFlags = ImGuiWindowFlags.MenuBar or ImGuiWindowFlags.NoDocking
+        ImGui.setNextWindowPos(0.0f, 0.0f, ImGuiCond.Always)
+        ImGui.setNextWindowSize(width.toFloat(), height.toFloat())
+        ImGui.pushStyleVar(ImGuiStyleVar.WindowRounding, 0.0f)
+        ImGui.pushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f)
+        windowFlags = windowFlags or (ImGuiWindowFlags.NoTitleBar or ImGuiWindowFlags.NoCollapse or
+                ImGuiWindowFlags.NoResize or ImGuiWindowFlags.NoMove or
+                ImGuiWindowFlags.NoBringToFrontOnFocus or ImGuiWindowFlags.NoNavFocus)
+        ImGui.begin("Dockspace", ImBoolean(true), windowFlags)
+        ImGui.popStyleVar(2)
+        ImGui.dockSpace(ImGui.getID("Dockspace"))
     }
 }

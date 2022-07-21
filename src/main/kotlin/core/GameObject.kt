@@ -1,5 +1,7 @@
 package core
 
+import component.Component
+
 class GameObject(val name: String, var transform: Transform = Transform(), var zIndex: Int = 0) {
     private val components = mutableListOf<Component>()
     fun <T : Component> getComponent(componentClass: Class<T>): T? {

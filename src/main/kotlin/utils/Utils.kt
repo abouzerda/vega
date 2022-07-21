@@ -1,7 +1,7 @@
 package utils
 
 import com.google.gson.GsonBuilder
-import core.Component
+import component.Component
 import io.ComponentTypeAdapter
 import java.io.FileNotFoundException
 

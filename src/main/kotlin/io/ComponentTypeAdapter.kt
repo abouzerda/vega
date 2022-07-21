@@ -1,7 +1,7 @@
 package io
 
 import com.google.gson.*
-import core.Component
+import component.Component
 import java.lang.reflect.Type
 
 object ComponentTypeAdapter : JsonSerializer<Component>, JsonDeserializer<Component> {

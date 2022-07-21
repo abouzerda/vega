@@ -1,7 +1,5 @@
 package component
 
-import core.Component
-
 class FontRenderer : Component() {
     override fun start() {
         println("Starting Font Renderer")

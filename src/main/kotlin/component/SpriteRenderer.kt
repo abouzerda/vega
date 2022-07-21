@@ -1,6 +1,5 @@
 package component
 
-import core.Component
 import core.Transform
 import imgui.ImGui
 import org.joml.Vector4f
