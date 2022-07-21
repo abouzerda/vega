@@ -2,12 +2,27 @@ package io
 
 import core.GLFWWindow
 import imgui.ImGui
+import org.joml.Vector4d
 import org.lwjgl.glfw.GLFW
 import java.util.*
 
 object MouseListener {
     var cursorPosX: Double = 0.0
     var cursorPosY: Double = 0.0
+
+    val normalizedX: Double
+        get() = 2 * (cursorPosX / GLFWWindow.width) - 1
+    val normalizedY: Double
+        get() = 2 * (cursorPosY / GLFWWindow.height) - 1
+
+    val cursorOrthoX: Double
+        get() = Vector4d(normalizedX, 0.0, 0.0, 1.0)
+            .mul(GLFWWindow.currentScene.camera.inverseProjectionMatrix)
+            .mul(GLFWWindow.currentScene.camera.inverseViewMatrix).x
+    val cursorOrthoY: Double
+        get() = Vector4d(0.0, normalizedY, 0.0, 1.0)
+            .mul(GLFWWindow.currentScene.camera.inverseProjectionMatrix)
+            .mul(GLFWWindow.currentScene.camera.inverseViewMatrix).y
 
     private val io
         get() = ImGui.getIO()

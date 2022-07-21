@@ -3,6 +3,7 @@ package scene
 import component.SpriteSheet
 import imgui.ImGui
 import imgui.ImVec2
+import io.MouseListener
 import org.joml.Vector2f
 
 object Widgets {
@@ -39,6 +40,26 @@ object Widgets {
                 ImGui.sameLine()
             }
         }
+        ImGui.end()
+    }
+
+    fun showMouse() {
+        ImGui.begin("Mouse")
+        ImGui.text(
+            "Screen Coordinates: (${MouseListener.cursorPosX.toInt()}, ${MouseListener.cursorPosY.toInt()})"
+        )
+        ImGui.text(
+            "Normalized Device Coordinates: (%.2f, %.2f)".format(
+                MouseListener.normalizedX,
+                MouseListener.normalizedY
+            )
+        )
+        ImGui.text(
+            "World Coordinates: (%.2f, %.2f)".format(
+                MouseListener.cursorOrthoX,
+                MouseListener.cursorOrthoY
+            )
+        )
         ImGui.end()
     }
 }

@@ -34,6 +34,7 @@ class MainScene : Scene() {
 
     override fun imgui() {
         Widgets.showSprites(sprites)
+        Widgets.showMouse()
         activeGameObject.ifPresent {
             ImGui.begin("Inspector")
             it.imgui()

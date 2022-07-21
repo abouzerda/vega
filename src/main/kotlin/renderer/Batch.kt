@@ -76,8 +76,8 @@ class Batch(
         }
         /* Use shader */
         shader.bind()
-        shader.uploadMat4f("uProjection", GLFWWindow.currentScene.camera.getProjectionMatrix())
-        shader.uploadMat4f("uView", GLFWWindow.currentScene.camera.getViewMatrix())
+        shader.uploadMat4f("uProjection", GLFWWindow.currentScene.camera.projectionMatrix)
+        shader.uploadMat4f("uView", GLFWWindow.currentScene.camera.viewMatrix)
         for (i in textures.indices) {
             glActiveTexture(GL_TEXTURE0 + i + 1)
             textures[i].bind()
