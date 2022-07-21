@@ -12,6 +12,7 @@ class Batch(
     var zIndex: Int
 ) : Comparable<Batch> {
     private var sprites: MutableList<SpriteRenderer> = mutableListOf()
+
     /* TODO: Check if enough room left for textures! */
     private var textures: MutableList<Texture> = mutableListOf()
     private val texSlots: IntArray = IntArray(8) { it }

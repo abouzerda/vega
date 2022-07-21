@@ -7,9 +7,10 @@ group = "org.example"
 version = "1.0-SNAPSHOT"
 
 val lwjglVersion = "3.2.3"
+val lwjglNatives = "natives-linux"
 val jomlVersion = "1.10.2"
 val imguiVersion = "1.76-0.9"
-val lwjglNatives = "natives-linux"
+val gsonVersion = "2.9.0"
 
 application {
     mainClassName = "MainKt"
@@ -46,6 +47,8 @@ dependencies {
     implementation("io.imgui.java", "binding", imguiVersion)
     implementation("io.imgui.java", "lwjgl3", imguiVersion)
     runtimeOnly("io.imgui.java", "natives-linux", imguiVersion)
+
+    implementation("com.google.code.gson", "gson", gsonVersion)
 }
 
 tasks {

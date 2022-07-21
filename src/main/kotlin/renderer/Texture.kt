@@ -19,12 +19,12 @@ class Texture(filepath: String) {
         val width = BufferUtils.createIntBuffer(1)
         val height = BufferUtils.createIntBuffer(1)
         val channels = BufferUtils.createIntBuffer(1)
-        stbi_set_flip_vertically_on_load(true);
+        stbi_set_flip_vertically_on_load(true)
         val image = stbi_load(filepath, width, height, channels, 0)
         if (image != null) {
             this.width = width.get(0)
             this.height = height.get(0)
-            val mode = when(channels.get(0)) {
+            val mode = when (channels.get(0)) {
                 3 -> GL_RGB
                 4 -> GL_RGBA
                 else -> throw Exception("ERROR: Unknown number of channels")

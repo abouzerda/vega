@@ -9,7 +9,10 @@ class SpriteRenderer(
     color: Vector4f = Vector4f(1f, 1f, 1f, 1f),
     sprite: Sprite = Sprite()
 ) : Component() {
+    @Transient
     var syncedGPU = true
+
+    @Transient
     var transform: Transform = Transform()
         set(value) {
             if (field != value) {

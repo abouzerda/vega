@@ -5,6 +5,8 @@ import io.KeyEvent
 import io.MouseEvent
 import org.joml.Vector2f
 import renderer.Renderer
+import utils.Utils
+import java.io.File
 import java.util.*
 
 abstract class Scene {
@@ -34,7 +36,7 @@ abstract class Scene {
         active = true
     }
 
-    fun addGameObject(gameObject: GameObject) {
+    private fun addGameObject(gameObject: GameObject) {
         gameObjects.add(gameObject)
         if (active) {
             gameObject.start()
@@ -54,4 +56,21 @@ abstract class Scene {
     }
 
     open fun imgui() {}
+
+    internal fun load() {
+        with(File(SAVE_FILE_NAME)) {
+            val json = readText()
+            for (gameObject in Utils.gson.fromJson(json, Array<GameObject>::class.java)) {
+                addGameObject(gameObject)
+            }
+
+        }
+    }
+
+    internal fun save() {
+        with(File(SAVE_FILE_NAME)) {
+            val json = Utils.gson.toJson(gameObjects)
+            writeText(json)
+        }
+    }
 }

@@ -1,11 +1,17 @@
 package utils
 
+import com.google.gson.GsonBuilder
+import core.Component
+import io.ComponentTypeAdapter
 import java.io.FileNotFoundException
 
-class Utils {
-    companion object {
-        fun loadResource(filepath: String): String {
-            return Utils::class.java.getResource(filepath)?.readText() ?: throw FileNotFoundException()
-        }
+object Utils {
+    val gson = GsonBuilder()
+        .setPrettyPrinting()
+        .registerTypeAdapter(Component::class.java, ComponentTypeAdapter)
+        .create()
+
+    fun loadResource(filepath: String): String {
+        return Utils::class.java.getResource(filepath)?.readText() ?: throw FileNotFoundException()
     }
 }

@@ -2,6 +2,7 @@ package core
 
 
 abstract class Component {
+    @Transient
     lateinit var gameObject: GameObject
 
     abstract fun start()

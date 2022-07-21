@@ -83,6 +83,7 @@ object GLFWWindow {
     }
 
     internal fun close() {
+        currentScene.save()
         /* Clean up memory */
         glfwFreeCallbacks(glfwWindowHandle)
         glfwDestroyWindow(glfwWindowHandle)

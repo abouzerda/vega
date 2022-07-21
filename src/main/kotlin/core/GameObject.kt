@@ -8,15 +8,18 @@ class GameObject(val name: String, var transform: Transform = Transform(), var z
     }
 
     fun <T : Component> addComponent(component: Component) {
-        components.add(component)
         component.gameObject = this
+        components.add(component)
     }
 
     fun <T : Component> removeComponent(componentClass: Class<T>) {
         components.removeIf { c -> componentClass.isAssignableFrom(c.javaClass) }
     }
 
-    fun start() = components.forEach { it.start() }
+    fun start() = components.forEach {
+        it.gameObject = this
+        it.start()
+    }
 
     fun update(dt: Float) = components.forEach { it.update(dt) }
 
