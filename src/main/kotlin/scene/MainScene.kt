@@ -15,8 +15,9 @@ class MainScene : Scene() {
     override fun init() {
         Assets.loadShader("/default.glsl")
         Assets.loadTexture("assets/images/blendImage2.png")
+        Assets.loadSpriteSheet("assets/images/spriteSheet.png", 16, 16, 26, 0)
+
         camera = Camera(Vector2f(-250f, 0f))
-        load()
         activeGameObject = Optional.ofNullable(gameObjects.firstOrNull())
     }
 

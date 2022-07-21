@@ -25,6 +25,7 @@ open class LWJGLApplication {
 
     fun showScene(scene: Scene) {
         GLFWWindow.showScene(scene.apply {
+            load()
             init()
             start()
         })

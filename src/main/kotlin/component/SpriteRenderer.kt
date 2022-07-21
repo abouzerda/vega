@@ -10,7 +10,7 @@ class SpriteRenderer(
     sprite: Sprite = Sprite()
 ) : Component() {
     @Transient
-    var syncedGPU = true
+    var syncedGPU = false
 
     @Transient
     var transform: Transform = Transform()

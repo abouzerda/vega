@@ -12,7 +12,7 @@ abstract class Scene {
     protected var renderer: Renderer = Renderer()
     var camera: Camera = Camera(Vector2f())
     protected var gameObjects = mutableListOf<GameObject>()
-    protected var active = false
+    private var active = false
     protected var activeGameObject: Optional<GameObject> = Optional.empty()
 
     /* Key input event handlers */
@@ -35,7 +35,7 @@ abstract class Scene {
         active = true
     }
 
-    private fun addGameObject(gameObject: GameObject) {
+    protected fun addGameObject(gameObject: GameObject) {
         gameObjects.add(gameObject)
         if (active) {
             gameObject.start()

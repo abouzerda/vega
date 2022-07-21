@@ -6,9 +6,9 @@
         "properties": {
           "color": {
             "x": 1.0,
-            "y": 0.0,
-            "z": 0.0,
-            "w": 0.54509807
+            "y": 0.035294116,
+            "z": 0.035294116,
+            "w": 0.5568628
           },
           "sprite": {
             "texCoords": [
@@ -31,6 +31,19 @@
             ]
           }
         }
+      },
+      {
+        "type": "component.Test",
+        "properties": {
+          "colliderType": 67,
+          "friction": 41.08,
+          "velocity": {
+            "x": 82.0,
+            "y": 87.5,
+            "z": 8.0
+          },
+          "isActive": true
+        }
       }
     ],
     "name": "Object 1",
@@ -40,8 +53,8 @@
         "y": 100.0
       },
       "scale": {
-        "x": 256.0,
-        "y": 256.0
+        "x": 64.0,
+        "y": 64.0
       }
     },
     "zIndex": 2
@@ -88,14 +101,66 @@
     "name": "Object 2",
     "transform": {
       "position": {
-        "x": 400.0,
+        "x": 250.0,
         "y": 100.0
       },
       "scale": {
-        "x": 256.0,
-        "y": 256.0
+        "x": 64.0,
+        "y": 64.0
       }
     },
     "zIndex": 3
+  },
+  {
+    "components": [
+      {
+        "type": "component.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "texture": {
+              "texID": 3,
+              "width": 224,
+              "height": 32
+            },
+            "texCoords": [
+              {
+                "x": 0.071428575,
+                "y": 1.0
+              },
+              {
+                "x": 0.071428575,
+                "y": 0.5
+              },
+              {
+                "x": 0.0,
+                "y": 0.5
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "name": "",
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 150.0
+      },
+      "scale": {
+        "x": 64.0,
+        "y": 64.0
+      }
+    },
+    "zIndex": 0
   }
 ]
