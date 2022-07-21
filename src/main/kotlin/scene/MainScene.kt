@@ -1,5 +1,6 @@
 package scene
 
+import component.SpriteSheet
 import core.Camera
 import core.Scene
 import imgui.ImGui
@@ -11,6 +12,9 @@ import java.util.logging.Logger
 
 class MainScene : Scene() {
     val logger: Logger = Logger.getLogger(javaClass.name)
+    private val sprites: SpriteSheet
+        get() = Assets.loadSpriteSheet("assets/images/spriteSheet.png")
+
 
     override fun init() {
         Assets.loadShader("/default.glsl")
@@ -29,6 +33,7 @@ class MainScene : Scene() {
     }
 
     override fun imgui() {
+        Widgets.showSprites(sprites)
         activeGameObject.ifPresent {
             ImGui.begin("Inspector")
             it.imgui()

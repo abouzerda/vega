@@ -15,7 +15,7 @@ import imgui.gl3.ImGuiImplGl3
 import org.lwjgl.glfw.GLFW.*
 import java.util.logging.Logger
 
-class ImGUI(private var glfwWindowHandle: Long) {
+class ImGuiAdapter(private var glfwWindowHandle: Long) {
     private val logger: Logger = Logger.getLogger(javaClass.name)
     private val lwjglRenderer: ImGuiImplGl3 = ImGuiImplGl3()
 
@@ -76,27 +76,6 @@ class ImGUI(private var glfwWindowHandle: Long) {
         //ImGui.showDemoWindow()
         ImGui.render()
         endFrame()
-    }
-
-    private var values: FloatArray = FloatArray(10)
-    private var valuesCount: Int = 10
-    private var refreshTime: Double = 0.0
-    private var valuesOffset: Int = 0
-    private var fps = ""
-
-    private fun showFPS(dt: Float) {
-        if (fps == "") fps = "%.2f FPS".format(1 / dt)
-        valuesOffset = (valuesOffset + 1) % values.size
-        refreshTime += dt
-        if (refreshTime >= 0.5) {
-            fps = "%.2f FPS".format(1 / dt)
-            refreshTime = 0.0
-            values = FloatArray(valuesCount) {
-                if (it != valuesCount - 1) values[it + 1]
-                else 1 / dt
-            }
-        }
-        ImGui.plotLines("", values, valuesCount, 0, fps, 0f, 80f, 0f, 80f)
     }
 
     private fun startFrame(dt: Float) {

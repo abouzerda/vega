@@ -1,6 +1,6 @@
 package core
 
-import io.ImGUI
+import io.ImGuiAdapter
 import io.KeyListener
 import io.MouseListener
 import org.lwjgl.glfw.Callbacks.glfwFreeCallbacks
@@ -20,7 +20,7 @@ object GLFWWindow {
     private const val title = ""
 
     private var glfwWindowHandle = 0L
-    private lateinit var imGui: ImGUI
+    private lateinit var imGui: ImGuiAdapter
 
     internal var currentScene: Scene = MainScene()
 
@@ -64,7 +64,7 @@ object GLFWWindow {
         glEnable(GL_BLEND)
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA)
 
-        imGui = ImGUI(glfwWindowHandle)
+        imGui = ImGuiAdapter(glfwWindowHandle)
         imGui.init()
     }
 

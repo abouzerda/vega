@@ -6,7 +6,7 @@ import org.lwjgl.stb.STBImage.*
 
 
 class Texture(filepath: String) {
-    private val texID: Int = glGenTextures()
+    val texID: Int = glGenTextures()
     val width: Int
     val height: Int
 

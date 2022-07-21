@@ -11,6 +11,8 @@
             "w": 0.5568628
           },
           "sprite": {
+            "width": 0,
+            "height": 0,
             "texCoords": [
               {
                 "x": 1.0,
@@ -71,6 +73,8 @@
             "w": 1.0
           },
           "sprite": {
+            "width": 0,
+            "height": 0,
             "texture": {
               "texID": 2,
               "width": 256,
@@ -123,6 +127,8 @@
             "w": 1.0
           },
           "sprite": {
+            "width": 0,
+            "height": 0,
             "texture": {
               "texID": 3,
               "width": 224,

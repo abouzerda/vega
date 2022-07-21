@@ -29,10 +29,10 @@ object Assets {
 
     fun loadSpriteSheet(
         filepath: String,
-        spriteWidth: Int,
-        spriteHeight: Int,
-        numSprites: Int,
-        spacing: Int
+        spriteWidth: Int = 0,
+        spriteHeight: Int = 0,
+        numSprites: Int = 0,
+        spacing: Int = 0
     ): SpriteSheet {
         if (spriteSheets.containsKey(filepath)) return spriteSheets[filepath]!!
         val spriteSheet = SpriteSheet(
