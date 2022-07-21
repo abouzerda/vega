@@ -28,8 +28,10 @@ class MainScene : Scene() {
     }
 
     override fun imgui() {
-        ImGui.begin("Test Window")
-        ImGui.text("Some random Text")
-        ImGui.end()
+        activeGameObject.ifPresent {
+            ImGui.begin("Inspector")
+            it.imgui()
+            ImGui.end()
+        }
     }
 }

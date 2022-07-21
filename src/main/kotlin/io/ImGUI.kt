@@ -14,7 +14,6 @@ import imgui.enums.ImGuiConfigFlags
 import imgui.gl3.ImGuiImplGl3
 import org.lwjgl.glfw.GLFW.*
 import java.util.logging.Logger
-import kotlin.math.cos
 
 class ImGUI(private var glfwWindowHandle: Long) {
     private val logger: Logger = Logger.getLogger(javaClass.name)
@@ -73,7 +72,7 @@ class ImGUI(private var glfwWindowHandle: Long) {
         startFrame(dt)
         ImGui.newFrame()
         //showFPS(dt)
-        GLFWWindow.currentScene.sceneImgui()
+        GLFWWindow.currentScene.imgui()
         //ImGui.showDemoWindow()
         ImGui.render()
         endFrame()

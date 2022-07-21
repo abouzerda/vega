@@ -1,6 +1,5 @@
 package core
 
-import imgui.ImGui
 import io.KeyEvent
 import io.MouseEvent
 import org.joml.Vector2f
@@ -46,15 +45,6 @@ abstract class Scene {
 
     abstract fun init()
     abstract fun update(dt: Float)
-    fun sceneImgui() {
-        activeGameObject.ifPresent {
-            ImGui.begin("Inspector")
-            it.imgui()
-            ImGui.end()
-        }
-        imgui()
-    }
-
     open fun imgui() {}
 
     internal fun load() {
