@@ -28,7 +28,7 @@ class ImGuiAdapter(private var glfwWindowHandle: Long) {
             /* Navigation with keyboard */
             addConfigFlags(ImGuiConfigFlags.NavEnableKeyboard)
             /* Enable window docking */
-            addConfigFlags(ImGuiConfigFlags.DockingEnable)
+            //addConfigFlags(ImGuiConfigFlags.DockingEnable)
             /* Mouse cursors to display while resizing windows etc. */
             addBackendFlags(ImGuiBackendFlags.HasMouseCursors)
             backendPlatformName = IMGUI_PLATFORM_NAME
@@ -73,11 +73,11 @@ class ImGuiAdapter(private var glfwWindowHandle: Long) {
     fun update(dt: Float) {
         startFrame(dt)
         ImGui.newFrame()
-        setupDockspace()
+        //setupDockspace()
         //showFPS(dt)
         GLFWWindow.currentScene.imgui()
         //ImGui.showDemoWindow()
-        ImGui.end()
+        //ImGui.end()
         ImGui.render()
         endFrame()
     }
