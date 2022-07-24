@@ -8,6 +8,12 @@ import java.lang.reflect.Modifier
 
 
 abstract class Component {
+    var id = 0
+
+    companion object {
+        var ID_COUNTER: Int = 0
+    }
+
     @Transient
     lateinit var gameObject: GameObject
 
@@ -52,5 +58,9 @@ abstract class Component {
 
             if (isPrivate) it.isAccessible = false
         }
+    }
+
+    fun generateId() {
+        if (id == 0) this.id = ++ID_COUNTER
     }
 }

@@ -1,11 +1,13 @@
 package core
 
+import component.Component
 import io.KeyEvent
 import io.MouseEvent
 import org.joml.Vector2f
 import renderer.Renderer
 import utils.Utils
 import java.io.File
+import java.lang.Integer.max
 import java.util.*
 
 abstract class Scene {
@@ -49,11 +51,16 @@ abstract class Scene {
 
     internal fun load() {
         with(File(SAVE_FILE_NAME)) {
+            var maxGameObjectId = 0
+            var maxComponentId = 0
             val json = readText()
             for (gameObject in Utils.gson.fromJson(json, Array<GameObject>::class.java)) {
                 addGameObject(gameObject)
+                maxGameObjectId = max(gameObject.id, maxGameObjectId)
+                maxComponentId = max(gameObject.components.maxOfOrNull { it.id } ?: 0, maxComponentId)
             }
-
+            GameObject.ID_COUNTER = maxGameObjectId
+            Component.ID_COUNTER = maxComponentId
         }
     }
 

@@ -2,6 +2,7 @@ package scene
 
 import component.MouseControls
 import component.SpriteSheet
+import component.Test
 import core.Camera
 import core.Scene
 import imgui.ImGui
@@ -24,6 +25,7 @@ class MainScene : Scene() {
 
         camera = Camera(Vector2f(-250f, 0f))
         activeGameObject = Optional.ofNullable(gameObjects.firstOrNull())
+        activeGameObject.get().addComponent<Test>(Test())
     }
 
     override fun update(dt: Float) {

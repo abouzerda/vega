@@ -24,6 +24,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("junit", "junit", "4.13.2")
+    implementation("org.junit.jupiter", "junit-jupiter", "5.8.1")
 
     implementation(platform("org.lwjgl:lwjgl-bom:$lwjglVersion"))
 
