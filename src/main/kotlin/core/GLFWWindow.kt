@@ -9,6 +9,7 @@ import org.lwjgl.glfw.GLFWErrorCallback
 import org.lwjgl.opengl.GL
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.system.MemoryUtil.NULL
+import renderer.FrameBuffer
 import scene.MainScene
 import java.util.logging.Logger
 
@@ -21,8 +22,11 @@ object GLFWWindow {
 
     private var glfwWindowHandle = 0L
     private lateinit var imGui: ImGuiAdapter
+    lateinit var frameBuffer: FrameBuffer
 
     internal var currentScene: Scene = MainScene()
+
+    const val targetAspectRatio: Float = 16.0f / 9.0f
 
     fun showScene(scene: Scene) {
         this.currentScene = scene
@@ -64,6 +68,10 @@ object GLFWWindow {
         glEnable(GL_BLEND)
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA)
 
+        frameBuffer = FrameBuffer(1600, 900)
+        glViewport(0, 0, 1600, 900)
+
+
         imGui = ImGuiAdapter(glfwWindowHandle)
         imGui.init()
     }
@@ -71,14 +79,14 @@ object GLFWWindow {
     internal fun update(dt: Float?) {
         /* Poll events */
         glfwPollEvents()
+        this.frameBuffer.bind()
         /* Clear screen */
         glClearColor(1f, 1f, 1f, 1f)
         glClear(GL_COLOR_BUFFER_BIT)
         /* Update current scene */
-        if (dt != null) {
-            this.currentScene.update(dt)
-            this.imGui.update(dt)
-        }
+        if (dt != null) this.currentScene.update(dt)
+        this.frameBuffer.unbind()
+        if (dt != null) this.imGui.update(dt)
         glfwSwapBuffers(glfwWindowHandle)
     }
 

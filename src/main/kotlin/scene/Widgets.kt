@@ -35,7 +35,6 @@ object Widgets {
                 MouseControls.pickupObject(gameObject)
             }
             ImGui.popID()
-
             val lastButtonPos = ImVec2()
             ImGui.getItemRectMax(lastButtonPos)
             val lastButtonX2 = lastButtonPos.x
