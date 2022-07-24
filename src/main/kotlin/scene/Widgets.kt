@@ -1,6 +1,9 @@
 package scene
 
+import component.MouseControls
 import component.SpriteSheet
+import core.GameObject
+import core.Prefabs
 import imgui.ImGui
 import imgui.ImVec2
 import io.MouseListener
@@ -28,7 +31,8 @@ object Widgets {
                     id, spriteWidth, spriteHeight, texCoords[0].x, texCoords[0].y, texCoords[2].x, texCoords[2].y
                 )
             ) {
-                println("Button " + i + "clicked")
+                val gameObject: GameObject = Prefabs.generateSpriteObject(sprite, spriteWidth, spriteHeight)
+                MouseControls.pickupObject(gameObject)
             }
             ImGui.popID()
 
@@ -50,14 +54,12 @@ object Widgets {
         )
         ImGui.text(
             "Normalized Device Coordinates: (%.2f, %.2f)".format(
-                MouseListener.normalizedX,
-                MouseListener.normalizedY
+                MouseListener.normalizedX, MouseListener.normalizedY
             )
         )
         ImGui.text(
             "World Coordinates: (%.2f, %.2f)".format(
-                MouseListener.cursorOrthoX,
-                MouseListener.cursorOrthoY
+                MouseListener.cursorOrthoX, MouseListener.cursorOrthoY
             )
         )
         ImGui.end()

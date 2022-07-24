@@ -3,7 +3,7 @@ package io
 import core.GLFWWindow
 import imgui.ImGui
 import org.joml.Vector4d
-import org.lwjgl.glfw.GLFW
+import org.lwjgl.glfw.GLFW.*
 import java.util.*
 
 object MouseListener {
@@ -13,7 +13,7 @@ object MouseListener {
     val normalizedX: Double
         get() = 2 * (cursorPosX / GLFWWindow.width) - 1
     val normalizedY: Double
-        get() = 2 * (cursorPosY / GLFWWindow.height) - 1
+        get() = 2 * ((GLFWWindow.height - cursorPosY) / GLFWWindow.height) - 1
 
     val cursorOrthoX: Double
         get() = Vector4d(normalizedX, 0.0, 0.0, 1.0)
@@ -26,6 +26,12 @@ object MouseListener {
 
     private val io
         get() = ImGui.getIO()
+
+    private var buttons: Array<Boolean> = Array(GLFW_MOUSE_BUTTON_LAST + 1) { false }
+
+    fun pressedButton(button: Int): Boolean {
+        return buttons[button]
+    }
 
     internal fun sceneCursorPositionCallback(window: Long, xPos: Double, yPos: Double) {
         cursorPosX = xPos
@@ -41,8 +47,8 @@ object MouseListener {
     internal fun sceneMouseButtonCallback(window: Long, button: Int, action: Int, mods: Int) {
         val mouseEvent = MouseEvent(button = button, action = Optional.of(action), mods = mods)
         when (action) {
-            GLFW.GLFW_PRESS -> GLFWWindow.currentScene.onMousePress.invoke(mouseEvent)
-            GLFW.GLFW_RELEASE -> GLFWWindow.currentScene.onMouseRelease.invoke(mouseEvent)
+            GLFW_PRESS -> GLFWWindow.currentScene.onMousePress.invoke(mouseEvent).also { buttons[button] = true }
+            GLFW_RELEASE -> GLFWWindow.currentScene.onMouseRelease.invoke(mouseEvent).also { buttons[button] = false }
             else -> {}
         }
     }
@@ -52,9 +58,10 @@ object MouseListener {
     }
 
     internal fun imGuiMouseButtonCallback(window: Long, button: Int, action: Int, mods: Int) {
-        val mouseDown = BooleanArray(5) { button == it && action != GLFW.GLFW_RELEASE }
+        val mouseDown = BooleanArray(5) { button == it && action != GLFW_RELEASE }
         io.setMouseDown(mouseDown)
         if (!io.wantCaptureMouse && mouseDown[1]) ImGui.setWindowFocus(null)
+        if (!io.wantCaptureMouse) sceneMouseButtonCallback(window, button, action, mods)
     }
 
     internal fun imGuiScrollCallback(window: Long, xOffset: Double, yOffset: Double) {

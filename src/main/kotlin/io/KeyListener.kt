@@ -1,12 +1,11 @@
 package io
 
 import core.GLFWWindow
-import core.KEY_RANGE
 import imgui.ImGui
 import org.lwjgl.glfw.GLFW.*
 
 object KeyListener {
-    private var keys: Array<Boolean> = Array(KEY_RANGE) { false }
+    private var keys: Array<Boolean> = Array(GLFW_KEY_LAST + 1) { false }
 
     private val io
         get() = ImGui.getIO()
@@ -33,6 +32,8 @@ object KeyListener {
         io.keyShift = io.getKeysDown(GLFW_KEY_LEFT_SHIFT) || io.getKeysDown(GLFW_KEY_RIGHT_SHIFT)
         io.keyAlt = io.getKeysDown(GLFW_KEY_LEFT_ALT) || io.getKeysDown(GLFW_KEY_RIGHT_ALT)
         io.keySuper = io.getKeysDown(GLFW_KEY_LEFT_SUPER) || io.getKeysDown(GLFW_KEY_RIGHT_SUPER)
+
+        if (!io.wantCaptureKeyboard) sceneKeyCallback(window, key, scancode, action, mods)
     }
 
     internal fun imGuiCharCallback(window: Long, character: Int) {

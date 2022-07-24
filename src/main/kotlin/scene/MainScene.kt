@@ -1,5 +1,6 @@
 package scene
 
+import component.MouseControls
 import component.SpriteSheet
 import core.Camera
 import core.Scene
@@ -26,6 +27,7 @@ class MainScene : Scene() {
     }
 
     override fun update(dt: Float) {
+        MouseControls.update(dt)
         for (gameObject in this.gameObjects) {
             gameObject.update(dt)
         }

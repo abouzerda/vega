@@ -11,7 +11,7 @@ import java.util.*
 abstract class Scene {
     protected var renderer: Renderer = Renderer()
     var camera: Camera = Camera(Vector2f())
-    protected var gameObjects = mutableListOf<GameObject>()
+    var gameObjects = mutableListOf<GameObject>()
     private var active = false
     protected var activeGameObject: Optional<GameObject> = Optional.empty()
 
@@ -35,7 +35,7 @@ abstract class Scene {
         active = true
     }
 
-    protected fun addGameObject(gameObject: GameObject) {
+    internal fun addGameObject(gameObject: GameObject) {
         gameObjects.add(gameObject)
         if (active) {
             gameObject.start()
