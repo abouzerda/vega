@@ -50,7 +50,11 @@ abstract class Scene {
     open fun imgui() {}
 
     internal fun load() {
-        with(File(SAVE_FILE_NAME)) {
+        val file = File(SAVE_FILE_NAME)
+        if (file.createNewFile()) {
+            file.writeText(Utils.gson.toJson(emptyList<GameObject>()))
+        }
+        with(file) {
             var maxGameObjectId = 0
             var maxComponentId = 0
             val json = readText()
