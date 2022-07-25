@@ -283,5 +283,62 @@
       }
     },
     "zIndex": 0
+  },
+  {
+    "id": 6,
+    "components": [
+      {
+        "type": "component.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "texID": 4,
+              "width": 224,
+              "height": 32,
+              "filepath": "assets/images/spriteSheet.png"
+            },
+            "texCoords": [
+              {
+                "x": 0.071428575,
+                "y": 0.5
+              },
+              {
+                "x": 0.071428575,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 0.5
+              }
+            ]
+          },
+          "id": 6
+        }
+      }
+    ],
+    "name": "Sprite_Object_Gen",
+    "transform": {
+      "position": {
+        "x": 1024.0,
+        "y": 640.0
+      },
+      "scale": {
+        "x": 64.0,
+        "y": 64.0
+      }
+    },
+    "zIndex": 0
   }
 ]

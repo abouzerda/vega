@@ -17,7 +17,7 @@ class MainScene : Scene() {
     private val sprites: SpriteSheet
         get() = Assets.loadSpriteSheet("assets/images/spriteSheet.png")
 
-    private val components = listOf(MouseControls, Grid)
+    private val components = listOf(MouseControls /* Grid */)
 
     override fun init() {
         Assets.loadShader("/default.glsl")
