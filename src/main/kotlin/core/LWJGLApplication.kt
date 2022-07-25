@@ -16,7 +16,7 @@ open class LWJGLApplication {
         var dt: Float? = null
         while (!GLFWWindow.shouldClose()) {
             val time = GLFW.glfwGetTime()
-            GLFWWindow.update(dt)
+            if (dt != null) GLFWWindow.update(dt)
             dt = (GLFW.glfwGetTime() - time).toFloat()
         }
         /* If reached this point window should close */

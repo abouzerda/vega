@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.system.MemoryUtil.NULL
 import renderer.FrameBuffer
+import renderer.Lines
 import scene.MainScene
 import java.util.logging.Logger
 
@@ -76,17 +77,21 @@ object GLFWWindow {
         imGui.init()
     }
 
-    internal fun update(dt: Float?) {
+    internal fun update(dt: Float) {
         /* Poll events */
         glfwPollEvents()
-        this.frameBuffer.bind()
-        /* Clear screen */
-        glClearColor(1f, 1f, 1f, 1f)
-        glClear(GL_COLOR_BUFFER_BIT)
-        /* Update current scene */
-        if (dt != null) this.currentScene.update(dt)
-        this.frameBuffer.unbind()
-        if (dt != null) this.imGui.update(dt)
+        with(this.frameBuffer) {
+            bind()
+            Lines.beginFrame()
+            /* Clear screen */
+            glClearColor(1f, 1f, 1f, 1f)
+            glClear(GL_COLOR_BUFFER_BIT)
+            /* Update current scene */
+            Lines.draw()
+            currentScene.update(dt)
+            unbind()
+        }
+        this.imGui.update(dt)
         glfwSwapBuffers(glfwWindowHandle)
     }
 

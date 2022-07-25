@@ -55,5 +55,119 @@
       }
     },
     "zIndex": 0
+  },
+  {
+    "id": 2,
+    "components": [
+      {
+        "type": "component.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "texID": 4,
+              "width": 224,
+              "height": 32,
+              "filepath": "assets/images/spriteSheet.png"
+            },
+            "texCoords": [
+              {
+                "x": 0.71428573,
+                "y": 0.5
+              },
+              {
+                "x": 0.71428573,
+                "y": 0.0
+              },
+              {
+                "x": 0.64285713,
+                "y": 0.0
+              },
+              {
+                "x": 0.64285713,
+                "y": 0.5
+              }
+            ]
+          },
+          "id": 2
+        }
+      }
+    ],
+    "name": "Sprite_Object_Gen",
+    "transform": {
+      "position": {
+        "x": 347.6,
+        "y": 504.2847
+      },
+      "scale": {
+        "x": 64.0,
+        "y": 64.0
+      }
+    },
+    "zIndex": 0
+  },
+  {
+    "id": 3,
+    "components": [
+      {
+        "type": "component.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16,
+            "height": 16,
+            "texture": {
+              "texID": 4,
+              "width": 224,
+              "height": 32,
+              "filepath": "assets/images/spriteSheet.png"
+            },
+            "texCoords": [
+              {
+                "x": 0.85714287,
+                "y": 0.5
+              },
+              {
+                "x": 0.85714287,
+                "y": 0.0
+              },
+              {
+                "x": 0.78571427,
+                "y": 0.0
+              },
+              {
+                "x": 0.78571427,
+                "y": 0.5
+              }
+            ]
+          },
+          "id": 3
+        }
+      }
+    ],
+    "name": "Sprite_Object_Gen",
+    "transform": {
+      "position": {
+        "x": 980.4,
+        "y": 653.5264
+      },
+      "scale": {
+        "x": 64.0,
+        "y": 64.0
+      }
+    },
+    "zIndex": 0
   }
 ]
