@@ -3,14 +3,11 @@ package renderer
 import core.GLFWWindow
 import org.joml.Vector2f
 import org.joml.Vector3f
-import org.lwjgl.opengl.GL11
-import org.lwjgl.opengl.GL15
-import org.lwjgl.opengl.GL20
-import org.lwjgl.opengl.GL30
+import org.lwjgl.opengl.GL30.*
 import utils.Assets
 import java.util.*
 
-object Lines {
+object Debug {
     private const val MAX_LINES = 500
     private val lines: MutableList<Line> = ArrayList<Line>()
 
@@ -23,29 +20,29 @@ object Lines {
 
     fun start() {
         /* Generate the vao */
-        vaoID = GL30.glGenVertexArrays()
-        GL30.glBindVertexArray(vaoID)
+        vaoID = glGenVertexArrays()
+        glBindVertexArray(vaoID)
         /* Create the vbo and buffer some memory */
-        vboID = GL15.glGenBuffers()
-        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID)
-        GL15.glBufferData(
-            GL15.GL_ARRAY_BUFFER,
+        vboID = glGenBuffers()
+        glBindBuffer(GL_ARRAY_BUFFER, vboID)
+        glBufferData(
+            GL_ARRAY_BUFFER,
             (vertexArray.size * java.lang.Float.BYTES).toLong(),
-            GL15.GL_DYNAMIC_DRAW
+            GL_DYNAMIC_DRAW
         )
         /* Enable the vertex array attributes */
-        GL20.glVertexAttribPointer(0, 3, GL11.GL_FLOAT, false, 6 * java.lang.Float.BYTES, 0)
-        GL20.glEnableVertexAttribArray(0)
-        GL20.glVertexAttribPointer(
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 6 * java.lang.Float.BYTES, 0)
+        glEnableVertexAttribArray(0)
+        glVertexAttribPointer(
             1,
             3,
-            GL11.GL_FLOAT,
+            GL_FLOAT,
             false,
             6 * java.lang.Float.BYTES,
             (3 * java.lang.Float.BYTES).toLong()
         )
-        GL20.glEnableVertexAttribArray(1)
-        GL11.glLineWidth(2.0f)
+        glEnableVertexAttribArray(1)
+        glLineWidth(2.0f)
     }
 
     fun beginFrame() {
@@ -82,27 +79,27 @@ object Lines {
                 index += 6
             }
         }
-        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID)
-        GL15.glBufferSubData(GL15.GL_ARRAY_BUFFER, 0, vertexArray.copyOfRange(0, lines.size * 6 * 2))
+        glBindBuffer(GL_ARRAY_BUFFER, vboID)
+        glBufferSubData(GL_ARRAY_BUFFER, 0, vertexArray.copyOfRange(0, lines.size * 6 * 2))
         /* Use our shader */
         shader.bind()
         shader.uploadMat4f("uProjection", GLFWWindow.currentScene.camera.projectionMatrix)
         shader.uploadMat4f("uView", GLFWWindow.currentScene.camera.viewMatrix)
         /* Bind the vao */
-        GL30.glBindVertexArray(vaoID)
-        GL20.glEnableVertexAttribArray(0)
-        GL20.glEnableVertexAttribArray(1)
+        glBindVertexArray(vaoID)
+        glEnableVertexAttribArray(0)
+        glEnableVertexAttribArray(1)
         /* Draw the batch */
-        GL11.glDrawArrays(GL11.GL_LINES, 0, lines.size * 6 * 2)
+        glDrawArrays(GL_LINES, 0, lines.size * 6 * 2)
         /* Disable Location */
-        GL20.glDisableVertexAttribArray(0)
-        GL20.glDisableVertexAttribArray(1)
-        GL30.glBindVertexArray(0)
+        glDisableVertexAttribArray(0)
+        glDisableVertexAttribArray(1)
+        glBindVertexArray(0)
         /* Unbind shader */
         shader.unbind()
     }
 
-    fun addLine(from: Vector2f, to: Vector2f, color: Vector3f = Vector3f(0f, 1f, 0f), lifetime: Int = 1) {
+    fun addLine(from: Vector2f, to: Vector2f, color: Vector3f = Vector3f(0f, 0f, 0f), lifetime: Int = 1) {
         if (lines.size >= MAX_LINES) return
         lines.add(Line(from, to, color, lifetime))
     }

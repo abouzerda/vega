@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.system.MemoryUtil.NULL
 import renderer.FrameBuffer
-import renderer.Lines
+import renderer.Debug
 import scene.MainScene
 import java.util.logging.Logger
 
@@ -82,12 +82,12 @@ object GLFWWindow {
         glfwPollEvents()
         with(this.frameBuffer) {
             bind()
-            Lines.beginFrame()
+            Debug.beginFrame()
             /* Clear screen */
             glClearColor(1f, 1f, 1f, 1f)
             glClear(GL_COLOR_BUFFER_BIT)
             /* Update current scene */
-            Lines.draw()
+            Debug.draw()
             currentScene.update(dt)
             unbind()
         }

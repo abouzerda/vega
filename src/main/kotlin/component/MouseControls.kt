@@ -4,7 +4,9 @@ import core.GLFWWindow
 import core.GameObject
 import io.MouseListener
 import org.lwjgl.glfw.GLFW
+import utils.Settings
 import java.util.*
+import kotlin.math.floor
 
 object MouseControls : Component() {
     private var holdingObject: Optional<GameObject> = Optional.empty()
@@ -24,8 +26,12 @@ object MouseControls : Component() {
 
     override fun update(dt: Float) {
         if (holdingObject.isPresent) {
-            holdingObject.get().transform.position.x = (MouseListener.cursorOrthoX - 16).toFloat()
-            holdingObject.get().transform.position.y = (MouseListener.cursorOrthoY - 16).toFloat()
+
+            holdingObject.get().transform.position.x =
+                (floor(MouseListener.cursorOrthoX / Settings.GRID_WIDTH) * Settings.GRID_WIDTH).toFloat()
+            holdingObject.get().transform.position.y =
+                (floor(MouseListener.cursorOrthoY / Settings.GRID_HEIGHT) * Settings.GRID_HEIGHT).toFloat()
+
             if (MouseListener.pressedButton(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
                 placeObject()
             }
