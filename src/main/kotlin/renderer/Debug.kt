@@ -5,11 +5,11 @@ import org.joml.Vector2f
 import org.joml.Vector3f
 import org.lwjgl.opengl.GL30.*
 import utils.Assets
-import java.util.*
 
 object Debug {
     private const val MAX_LINES = 500
-    private val lines: MutableList<Line> = ArrayList<Line>()
+    private val lines: MutableList<Line> = mutableListOf()
+    private var linesCount: Int = 0
 
     /* 6 floats per vertex, 2 vertices per line */
     private val vertexArray = FloatArray(MAX_LINES * 6 * 2)
@@ -55,6 +55,7 @@ object Debug {
         while (i < lines.size) {
             if (lines[i].beginFrame() < 0) {
                 lines.removeAt(i)
+                linesCount--
                 i--
             }
             i++
@@ -80,7 +81,7 @@ object Debug {
             }
         }
         glBindBuffer(GL_ARRAY_BUFFER, vboID)
-        glBufferSubData(GL_ARRAY_BUFFER, 0, vertexArray.copyOfRange(0, lines.size * 6 * 2))
+        glBufferSubData(GL_ARRAY_BUFFER, 0, vertexArray.copyOfRange(0, linesCount * 6 * 2))
         /* Use our shader */
         shader.bind()
         shader.uploadMat4f("uProjection", GLFWWindow.currentScene.camera.projectionMatrix)
@@ -90,7 +91,7 @@ object Debug {
         glEnableVertexAttribArray(0)
         glEnableVertexAttribArray(1)
         /* Draw the batch */
-        glDrawArrays(GL_LINES, 0, lines.size * 6 * 2)
+        glDrawArrays(GL_LINES, 0, linesCount * 6 * 2)
         /* Disable Location */
         glDisableVertexAttribArray(0)
         glDisableVertexAttribArray(1)
@@ -102,5 +103,6 @@ object Debug {
     fun addLine(from: Vector2f, to: Vector2f, color: Vector3f = Vector3f(0f, 0f, 0f), lifetime: Int = 1) {
         if (lines.size >= MAX_LINES) return
         lines.add(Line(from, to, color, lifetime))
+        linesCount++
     }
 }

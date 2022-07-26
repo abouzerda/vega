@@ -17,10 +17,11 @@ class MainScene : Scene() {
     private val sprites: SpriteSheet
         get() = Assets.loadSpriteSheet("assets/images/spriteSheet.png")
 
-    private val components = listOf(MouseControls /* Grid */)
+    private val components = listOf(MouseControls, Grid )
 
     override fun init() {
         Assets.loadShader("/default.glsl")
+        Assets.loadShader("/debug.glsl")
         Assets.loadTexture("assets/images/blendImage2.png")
         Assets.loadSpriteSheet("assets/images/spriteSheet.png", 16, 16, 26, 0)
 
@@ -28,7 +29,6 @@ class MainScene : Scene() {
         activeGameObject = Optional.ofNullable(gameObjects.firstOrNull())
     }
 
-    var t = 0.0f
     override fun update(dt: Float) {
         components.forEach { it.update(dt) }
         for (gameObject in this.gameObjects) {
