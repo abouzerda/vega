@@ -1,3 +1,7 @@
+# Game Engine files
+imgui.ini
+data.json
+
 # Compiled class file
 *.class
 
