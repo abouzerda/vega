@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "1.4.21"
     application
+    `maven-publish`
 }
 
 group = "org.example"
@@ -12,13 +13,9 @@ val jomlVersion = "1.10.2"
 val imguiVersion = "1.77-0.17.1"
 val gsonVersion = "2.9.0"
 
-application {
-    mainClassName = "MainKt"
-}
-
 repositories {
-    jcenter()
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -52,6 +49,18 @@ dependencies {
     implementation("com.google.code.gson", "gson", gsonVersion)
 }
 
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "com.example"
+            artifactId = "vega"
+            version = "1.0-SNAPSHOT"
+
+            from(components["java"])
+        }
+    }
+}
+
 tasks {
     compileKotlin {
         kotlinOptions.jvmTarget = "1.8"
@@ -59,4 +68,8 @@ tasks {
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
     }
+}
+
+application {
+    mainClass.set("MainKt")
 }
