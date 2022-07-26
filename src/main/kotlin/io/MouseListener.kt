@@ -1,9 +1,13 @@
 package io
 
+import core.Camera
 import core.GLFWWindow
 import imgui.ImGui
-import org.joml.Vector4d
+import org.joml.Matrix4f
+import org.joml.Vector2f
+import org.joml.Vector4f
 import org.lwjgl.glfw.GLFW.*
+import scene.Viewport
 import java.util.*
 
 object MouseListener {
@@ -11,18 +15,49 @@ object MouseListener {
     var cursorPosY: Double = 0.0
 
     val normalizedX: Double
-        get() = 2 * (cursorPosX / GLFWWindow.width) - 1
+        get() = 2 * ((cursorPosX - viewportPos.x) / viewportSize.x) - 1
     val normalizedY: Double
-        get() = 2 * ((GLFWWindow.height - cursorPosY) / GLFWWindow.height) - 1
+        get() = 2 * ((cursorPosY - viewportPos.y) / viewportSize.y) - 1
 
+    /*
     val cursorOrthoX: Double
         get() = Vector4d(normalizedX, 0.0, 0.0, 1.0)
-            .mul(GLFWWindow.currentScene.camera.inverseProjectionMatrix)
-            .mul(GLFWWindow.currentScene.camera.inverseViewMatrix).x
+            .mul(GLFWWindow.currentScene.camera.inverseViewMatrix)
+            .mul(GLFWWindow.currentScene.camera.inverseProjectionMatrix).x
     val cursorOrthoY: Double
         get() = Vector4d(0.0, normalizedY, 0.0, 1.0)
-            .mul(GLFWWindow.currentScene.camera.inverseProjectionMatrix)
-            .mul(GLFWWindow.currentScene.camera.inverseViewMatrix).y
+            .mul(GLFWWindow.currentScene.camera.inverseViewMatrix)
+            .mul(GLFWWindow.currentScene.camera.inverseProjectionMatrix).y
+    */
+
+    val cursorOrthoX: Double
+        get() {
+            var currentX: Double = cursorPosX - viewportPos.x
+            currentX = currentX / viewportSize.x * 2.0f - 1.0f
+            val tmp = Vector4f(currentX.toFloat(), 0f, 0f, 1f)
+            val camera: Camera = GLFWWindow.currentScene.camera
+            val viewProjection = Matrix4f()
+            camera.inverseViewMatrix.mul(camera.inverseProjectionMatrix, viewProjection)
+            tmp.mul(viewProjection)
+            currentX = tmp.x.toDouble()
+            return currentX
+        }
+
+    val cursorOrthoY: Double
+        get() {
+            var currentY: Double = cursorPosY - viewportPos.y
+            currentY = -(currentY / viewportSize.y * 2.0f - 1.0f)
+            val tmp = Vector4f(0f, currentY.toFloat(), 0f, 1f)
+            val camera: Camera = GLFWWindow.currentScene.camera
+            val viewProjection = Matrix4f()
+            camera.inverseViewMatrix.mul(camera.inverseProjectionMatrix, viewProjection)
+            tmp.mul(viewProjection)
+            currentY = tmp.y.toDouble()
+            return currentY
+        }
+
+    var viewportPos = Vector2f()
+    var viewportSize = Vector2f()
 
     private val io
         get() = ImGui.getIO()
@@ -61,7 +96,7 @@ object MouseListener {
         val mouseDown = BooleanArray(5) { button == it && action != GLFW_RELEASE }
         io.setMouseDown(mouseDown)
         if (!io.wantCaptureMouse && mouseDown[1]) ImGui.setWindowFocus(null)
-        if (!io.wantCaptureMouse) sceneMouseButtonCallback(window, button, action, mods)
+        if (!io.wantCaptureMouse || Viewport.wantCaptureMouse) sceneMouseButtonCallback(window, button, action, mods)
     }
 
     internal fun imGuiScrollCallback(window: Long, xOffset: Double, yOffset: Double) {
