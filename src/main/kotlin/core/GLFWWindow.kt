@@ -8,6 +8,7 @@ import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.glfw.GLFWErrorCallback
 import org.lwjgl.opengl.GL
 import org.lwjgl.opengl.GL11.*
+import org.lwjgl.opengl.GL14.glBlendFuncSeparate
 import org.lwjgl.system.MemoryUtil.NULL
 import renderer.FrameBuffer
 import renderer.Debug
@@ -64,11 +65,9 @@ object GLFWWindow {
 
         GL.createCapabilities()
         this.logger.info("OpenGL ${glGetString(GL_VERSION)?.split(' ')?.first()}!")
-
         /* Enable Alpha blending */
         glEnable(GL_BLEND)
-        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA)
-
+        glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
         frameBuffer = FrameBuffer(1600, 900)
         glViewport(0, 0, 1600, 900)
 
