@@ -14,6 +14,9 @@ object MouseListener {
     var cursorPosX: Double = 0.0
     var cursorPosY: Double = 0.0
 
+    var cursorScrollX: Double = 0.0
+    var cursorScrollY: Double = 0.0
+
     val normalizedX: Double
         get() = 2 * ((cursorPosX - viewportPos.x) / viewportSize.x) - 1
     val normalizedY: Double
@@ -68,6 +71,11 @@ object MouseListener {
         return buttons[button]
     }
 
+    fun endFrame() {
+        cursorScrollX = 0.0
+        cursorScrollY = 0.0
+    }
+
     internal fun sceneCursorPositionCallback(window: Long, xPos: Double, yPos: Double) {
         cursorPosX = xPos
         cursorPosY = yPos
@@ -89,6 +97,8 @@ object MouseListener {
     }
 
     internal fun sceneScrollCallback(window: Long, xOffset: Double, yOffset: Double) {
+        cursorScrollX = xOffset
+        cursorScrollY = yOffset
         GLFWWindow.currentScene.onMouseScroll.invoke(MouseEvent(xScrollOffset = xOffset, yScrollOffset = yOffset))
     }
 
@@ -102,5 +112,6 @@ object MouseListener {
     internal fun imGuiScrollCallback(window: Long, xOffset: Double, yOffset: Double) {
         io.mouseWheelH = io.mouseWheelH + xOffset.toFloat()
         io.mouseWheel = io.mouseWheel + yOffset.toFloat()
+        sceneScrollCallback(window, xOffset, yOffset)
     }
 }

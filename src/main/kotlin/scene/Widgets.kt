@@ -21,14 +21,14 @@ object Widgets {
 
         val windowX2 = windowPos.x + windowSize.x
         for ((i, sprite) in spriteSheet.sprites.withIndex()) {
-            val spriteWidth: Float = (sprite.width * 4).toFloat()
-            val spriteHeight: Float = (sprite.height * 4).toFloat()
+            val spriteWidth: Float = sprite.width.toFloat()
+            val spriteHeight: Float = sprite.height.toFloat()
             val id: Int = sprite.texture!!.texID
             val texCoords: Array<Vector2f> = sprite.texCoords
 
             ImGui.pushID(i)
             if (ImGui.imageButton(
-                    id, spriteWidth, spriteHeight, texCoords[0].x, texCoords[0].y, texCoords[2].x, texCoords[2].y
+                    id, spriteWidth * 2, spriteHeight * 2, texCoords[0].x, texCoords[0].y, texCoords[2].x, texCoords[2].y
                 )
             ) {
                 val gameObject: GameObject = Prefabs.generateSpriteObject(sprite, spriteWidth, spriteHeight)

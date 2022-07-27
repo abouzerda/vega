@@ -33,7 +33,7 @@ object KeyListener {
         io.keyAlt = io.getKeysDown(GLFW_KEY_LEFT_ALT) || io.getKeysDown(GLFW_KEY_RIGHT_ALT)
         io.keySuper = io.getKeysDown(GLFW_KEY_LEFT_SUPER) || io.getKeysDown(GLFW_KEY_RIGHT_SUPER)
 
-        if (!io.wantCaptureKeyboard) sceneKeyCallback(window, key, scancode, action, mods)
+        sceneKeyCallback(window, key, scancode, action, mods)
     }
 
     internal fun imGuiCharCallback(window: Long, character: Int) {

@@ -1,5 +1,6 @@
 package scene
 
+import component.CameraControls
 import component.Grid
 import component.MouseControls
 import component.SpriteSheet
@@ -17,7 +18,7 @@ class MainScene : Scene() {
     private val sprites: SpriteSheet
         get() = Assets.loadSpriteSheet("assets/images/frog.png")
 
-    private val components = listOf(MouseControls, Grid )
+    private val components = mutableListOf(MouseControls, Grid)
 
     override fun init() {
         Assets.loadShader("/default.glsl")
@@ -25,11 +26,13 @@ class MainScene : Scene() {
         Assets.loadSpriteSheet("assets/images/spriteSheet.png", 16, 16, 26, 0)
         Assets.loadSpriteSheet("assets/images/frog.png", 32, 32, 12, 0)
 
-        camera = Camera(Vector2f(-250f, 0f))
+        camera = Camera(Vector2f(0f, 0f))
+        this.components.add(CameraControls(this.camera))
         activeGameObject = Optional.ofNullable(gameObjects.firstOrNull())
     }
 
     override fun update(dt: Float) {
+        camera.adjustProjection()
         components.forEach { it.update(dt) }
         for (gameObject in this.gameObjects) {
             gameObject.update(dt)

@@ -67,7 +67,7 @@ object GLFWWindow {
         this.logger.info("OpenGL ${glGetString(GL_VERSION)?.split(' ')?.first()}!")
         /* Enable Alpha blending */
         glEnable(GL_BLEND)
-        glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
+        glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE)
         frameBuffer = FrameBuffer(1600, 900)
         glViewport(0, 0, 1600, 900)
 
@@ -92,6 +92,7 @@ object GLFWWindow {
         }
         this.imGui.update(dt)
         glfwSwapBuffers(glfwWindowHandle)
+        MouseListener.endFrame()
     }
 
     internal fun close() {
