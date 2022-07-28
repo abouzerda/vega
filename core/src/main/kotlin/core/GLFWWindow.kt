@@ -97,8 +97,7 @@ object GLFWWindow {
             if (MouseListener.pressedButton(GLFW_MOUSE_BUTTON_LEFT)) {
                 val x = MouseListener.screenX.toInt()
                 val y = MouseListener.screenY.toInt()
-                val (r, g, b) = readPixel(x, y)
-                println("($x,$y) = ($r,$g,$b)")
+                println("($x,$y) = Game Object ${getObjectId(x, y)}")
             }
 
             disableWriting()

@@ -77,6 +77,7 @@ class Batch(
             glBufferSubData(GL_ARRAY_BUFFER, 0, vertices)
         }
         /* Use shader */
+        val shader = Renderer.currentShader
         shader.bind()
         shader.uploadMat4f("uProjection", GLFWWindow.currentScene.camera.projectionMatrix)
         shader.uploadMat4f("uView", GLFWWindow.currentScene.camera.viewMatrix)
