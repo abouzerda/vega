@@ -17,8 +17,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="assets/images/logo.png" alt="Logo" width="150" height="150">
+  <a href="https://github.com/heaterscar/vega">
+    <img src="images/logo.png" alt="Logo" width="150" height="150">
   </a>
 
 <h3 align="center">VEGA</h3>
@@ -38,7 +38,8 @@ Then you can include Vega as a dependency from maven local into your project.
 ```shell
 [user@computer ~]$ git clone https://github.com/heaterscar/vega.git
 [user@computer ~]$ cd vega
-[user@computer vega]$ ./gradlew publishToMavenLocal
+[user@computer ~]$ chmod +x gradlew
+[user@computer vega]$ ./gradlew :core:publishToMavenLocal
 ```
 
 ### Dependencies
