@@ -69,11 +69,11 @@ class ObjectIdMask(width: Int, height: Int) {
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0)
     }
 
-    fun readPixel(x: Int, y: Int): Int {
+    fun readPixel(x: Int, y: Int): Triple<Float, Float, Float> {
         glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo)
         glReadBuffer(GL_COLOR_ATTACHMENT0)
         val pixels = FloatArray(3)
         glReadPixels(x, y, 1, 1, GL_RGB, GL_FLOAT, pixels)
-        return pixels[0].toInt() - 1
+        return Triple(pixels[0], pixels[1], pixels[2])
     }
 }

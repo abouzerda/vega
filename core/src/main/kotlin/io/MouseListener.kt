@@ -24,10 +24,10 @@ object MouseListener {
 
 
     val screenX: Double
-        get() = 1600 * (normalizedX + 1) / 2
+        get() = 1600 * ((cursorPosX - viewportPos.x) / viewportSize.x)
 
     val screenY: Double
-        get() = 900 * (normalizedY + 1) / 2
+        get() =  900 - ((cursorPosY - viewportPos.y) / viewportSize.y) * 900
 
     /*
     val cursorOrthoX: Double

@@ -6,6 +6,11 @@ import java.util.*
 
 class Renderer {
     private val batches: MutableList<Batch>
+
+    companion object {
+        lateinit var currentShader: Shader
+    }
+
     fun add(go: GameObject) {
         val spr: SpriteRenderer? = go.getComponent(SpriteRenderer::class.java)
         if (spr != null) {
@@ -32,6 +37,7 @@ class Renderer {
     }
 
     fun render() {
+        currentShader.bind()
         for (batch in batches) {
             batch.render()
         }

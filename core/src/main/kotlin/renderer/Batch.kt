@@ -3,8 +3,8 @@ package renderer
 import component.SpriteRenderer
 import core.GLFWWindow
 import org.joml.Vector2f
-import org.lwjgl.opengl.*
 import org.lwjgl.opengl.GL20.*
+import org.lwjgl.opengl.GL30
 import org.lwjgl.opengl.GL30.glBindVertexArray
 
 class Batch(
@@ -49,6 +49,8 @@ class Batch(
         glEnableVertexAttribArray(2)
         glVertexAttribPointer(3, TEX_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, TEX_ID_OFFSET.toLong())
         glEnableVertexAttribArray(3)
+        glVertexAttribPointer(4, ENTITY_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, ENTITY_ID_OFFSET.toLong())
+        glEnableVertexAttribArray(4)
     }
 
     fun addSprite(spriteRenderer: SpriteRenderer) {
@@ -139,6 +141,8 @@ class Batch(
             vertices[offset + 7] = texCoords[i].y
             /* Load texture id */
             vertices[offset + 8] = texId.toFloat()
+            /* Load entity id */
+            vertices[offset + 9] = spriteRenderer.gameObject.id.toFloat()
             offset += VERTEX_SIZE
         }
     }

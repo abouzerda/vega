@@ -10,9 +10,9 @@ import org.lwjgl.opengl.GL
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL14.glBlendFuncSeparate
 import org.lwjgl.system.MemoryUtil.NULL
-import renderer.FrameBuffer
-import renderer.Debug
+import renderer.*
 import scene.MainScene
+import utils.Assets
 import java.util.logging.Logger
 
 object GLFWWindow {
@@ -25,6 +25,7 @@ object GLFWWindow {
     private var glfwWindowHandle = 0L
     private lateinit var imGui: ImGuiAdapter
     lateinit var frameBuffer: FrameBuffer
+    lateinit var objectIdMask: ObjectIdMask
 
     internal var currentScene: Scene = MainScene()
 
@@ -69,6 +70,7 @@ object GLFWWindow {
         glEnable(GL_BLEND)
         glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE)
         frameBuffer = FrameBuffer(1600, 900)
+        objectIdMask = ObjectIdMask(1600, 900)
         glViewport(0, 0, 1600, 900)
 
 
@@ -77,6 +79,33 @@ object GLFWWindow {
     }
 
     internal fun update(dt: Float) {
+
+        val defaultShader: Shader = Assets.loadShader("/default.glsl")
+        val pickingShader: Shader = Assets.loadShader("/mask.glsl")
+
+        with(this.objectIdMask) {
+            glDisable(GL_BLEND)
+            enableWriting()
+
+            glViewport(0, 0, 1600, 900)
+            glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
+            glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
+
+            Renderer.currentShader = pickingShader
+            currentScene.render()
+
+            if (MouseListener.pressedButton(GLFW_MOUSE_BUTTON_LEFT)) {
+                val x = MouseListener.screenX.toInt()
+                val y = MouseListener.screenY.toInt()
+                val (r, g, b) = readPixel(x, y)
+                println("($x,$y) = ($r,$g,$b)")
+            }
+
+            disableWriting()
+            glEnable(GL_BLEND)
+        }
+
+
         /* Poll events */
         glfwPollEvents()
         with(this.frameBuffer) {
@@ -87,6 +116,7 @@ object GLFWWindow {
             glClear(GL_COLOR_BUFFER_BIT)
             /* Update current scene */
             Debug.draw()
+            Renderer.currentShader = defaultShader
             currentScene.update(dt)
             currentScene.render()
             unbind()
