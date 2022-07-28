@@ -37,9 +37,10 @@ class MainScene : Scene() {
         for (gameObject in this.gameObjects) {
             gameObject.update(dt)
         }
+    }
+    override fun render() {
         this.renderer.render()
     }
-
     override fun imgui() {
         Widgets.showSprites(sprites)
         Widgets.showMouse()

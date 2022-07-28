@@ -88,6 +88,7 @@ object GLFWWindow {
             /* Update current scene */
             Debug.draw()
             currentScene.update(dt)
+            currentScene.render()
             unbind()
         }
         this.imGui.update(dt)

@@ -22,6 +22,13 @@ object MouseListener {
     val normalizedY: Double
         get() = 2 * ((cursorPosY - viewportPos.y) / viewportSize.y) - 1
 
+
+    val screenX: Double
+        get() = 1600 * (normalizedX + 1) / 2
+
+    val screenY: Double
+        get() = 900 * (normalizedY + 1) / 2
+
     /*
     val cursorOrthoX: Double
         get() = Vector4d(normalizedX, 0.0, 0.0, 1.0)

@@ -74,4 +74,6 @@ abstract class Scene {
             writeText(json)
         }
     }
+
+    abstract fun render()
 }

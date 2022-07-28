@@ -6,4 +6,8 @@ class TestScene : Scene() {
 
     override fun update(dt: Float) {
     }
+
+    override fun render() {
+
+    }
 }
