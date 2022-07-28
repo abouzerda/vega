@@ -86,20 +86,13 @@ object GLFWWindow {
         with(this.objectIdMask) {
             glDisable(GL_BLEND)
             enableWriting()
-
+            /* Set up the viewport */
             glViewport(0, 0, 1600, 900)
             glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
             glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
-
+            /* Change the current shader */
             Renderer.currentShader = pickingShader
             currentScene.render()
-
-            if (MouseListener.pressedButton(GLFW_MOUSE_BUTTON_LEFT)) {
-                val x = MouseListener.screenX.toInt()
-                val y = MouseListener.screenY.toInt()
-                println("($x,$y) = Game Object ${getObjectId(x, y)}")
-            }
-
             disableWriting()
             glEnable(GL_BLEND)
         }

@@ -2,6 +2,7 @@ package scene
 
 import component.MouseControls
 import component.SpriteSheet
+import core.GLFWWindow
 import core.GameObject
 import core.Prefabs
 import imgui.ImGui
@@ -28,7 +29,13 @@ object Widgets {
 
             ImGui.pushID(i)
             if (ImGui.imageButton(
-                    id, spriteWidth * 2, spriteHeight * 2, texCoords[0].x, texCoords[0].y, texCoords[2].x, texCoords[2].y
+                    id,
+                    spriteWidth * 2,
+                    spriteHeight * 2,
+                    texCoords[0].x,
+                    texCoords[0].y,
+                    texCoords[2].x,
+                    texCoords[2].y
                 )
             ) {
                 val gameObject: GameObject = Prefabs.generateSpriteObject(sprite, spriteWidth, spriteHeight)
@@ -62,5 +69,13 @@ object Widgets {
             )
         )
         ImGui.end()
+    }
+
+    fun showInspector() {
+        GLFWWindow.currentScene.activeGameObject.ifPresent {
+            ImGui.begin("Inspector")
+            it.imgui()
+            ImGui.end()
+        }
     }
 }

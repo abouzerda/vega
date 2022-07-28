@@ -15,7 +15,7 @@ abstract class Scene {
     var camera: Camera = Camera(Vector2f())
     var gameObjects = mutableListOf<GameObject>()
     private var active = false
-    protected var activeGameObject: Optional<GameObject> = Optional.empty()
+    var activeGameObject: Optional<GameObject> = Optional.empty()
 
     /* Key input event handlers */
     var onKeyPress: ((KeyEvent) -> Unit) = {}
