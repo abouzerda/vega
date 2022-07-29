@@ -11,6 +11,7 @@ import imgui.gl3.ImGuiImplGl3
 import imgui.type.ImBoolean
 import org.lwjgl.glfw.GLFW.*
 import scene.Viewport
+import utils.Assets
 import java.util.logging.Logger
 
 class ImGuiAdapter(private var glfwWindowHandle: Long) {
@@ -148,12 +149,20 @@ class ImGuiAdapter(private var glfwWindowHandle: Long) {
         ImGui.newFrame()
         setupDockspace()
         //showFPS(dt)
+        setupMainMenuBar()
         GLFWWindow.currentScene.imgui()
         Viewport.imgui()
-        //ImGui.showDemoWindow()
         ImGui.end()
         ImGui.render()
         endFrame()
+    }
+
+    private fun setupMainMenuBar() {
+        if (ImGui.beginMainMenuBar()) {
+            if (ImGui.beginMenu("File")) ImGui.endMenu()
+            if (ImGui.beginMenu("Edit")) ImGui.endMenu()
+            ImGui.endMainMenuBar()
+        }
     }
 
     private fun startFrame(dt: Float) {
