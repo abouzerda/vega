@@ -2,7 +2,9 @@ package renderer
 
 import component.SpriteRenderer
 import core.GLFWWindow
+import org.joml.Matrix4f
 import org.joml.Vector2f
+import org.joml.Vector4f
 import org.lwjgl.opengl.GL20.*
 import org.lwjgl.opengl.GL30
 import org.lwjgl.opengl.GL30.glBindVertexArray
@@ -118,6 +120,23 @@ class Batch(
                 }
             }
         }
+        val isRotated = spriteRenderer.gameObject.transform.rotation != 0.0f
+        val transformMatrix = Matrix4f().identity()
+        if (isRotated) {
+            transformMatrix.translate(
+                spriteRenderer.gameObject.transform.position.x,
+                spriteRenderer.gameObject.transform.position.y, 0f
+            )
+            transformMatrix.rotate(
+                Math.toRadians(spriteRenderer.gameObject.transform.rotation.toDouble()).toFloat(),
+                0f, 0f, 1f
+            )
+            transformMatrix.scale(
+                spriteRenderer.gameObject.transform.scale.x,
+                spriteRenderer.gameObject.transform.scale.y, 1f
+            )
+        }
+
         /* Add vertices with the appropriate properties */
         var xAdd = 1.0f
         var yAdd = 1.0f
@@ -127,11 +146,17 @@ class Batch(
                 2 -> xAdd = 0.0f
                 3 -> yAdd = 1.0f
             }
+            var currentPos = Vector4f(
+                spriteRenderer.gameObject.transform.position.x + xAdd * spriteRenderer.gameObject.transform.scale.x,
+                spriteRenderer.gameObject.transform.position.y + yAdd * spriteRenderer.gameObject.transform.scale.y,
+                0f, 1f
+            )
+            if (isRotated) {
+                currentPos = Vector4f(xAdd, yAdd, 0f, 1f).mul(transformMatrix)
+            }
             /* Load position */
-            vertices[offset] =
-                spriteRenderer.gameObject.transform.position.x + xAdd * spriteRenderer.gameObject.transform.scale.x
-            vertices[offset + 1] =
-                spriteRenderer.gameObject.transform.position.y + yAdd * spriteRenderer.gameObject.transform.scale.y
+            vertices[offset] = currentPos.x
+            vertices[offset + 1] = currentPos.y
             /* Load color */
             vertices[offset + 2] = color.x
             vertices[offset + 3] = color.y

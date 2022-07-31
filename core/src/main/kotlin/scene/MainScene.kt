@@ -4,6 +4,7 @@ import component.CameraControls
 import component.Grid
 import component.MouseControls
 import component.SpriteSheet
+import component.gizmo.TranslateGizmo
 import core.GLFWWindow
 import core.Scene
 import io.MouseListener
@@ -23,15 +24,16 @@ class MainScene : Scene() {
     override fun init() {
         Assets.loadShader("/default.glsl")
         Assets.loadShader("/debug.glsl")
-        Assets.loadSpriteSheet("assets/images/spriteSheet.png", 16, 16, 26, 0)
         Assets.loadSpriteSheet("assets/images/frog.png", 32, 32, 12, 0)
+        val gizmos = Assets.loadSpriteSheet("assets/images/gizmos.png", 24, 48, 2, 0)
+        components.add(TranslateGizmo(gizmos.sprites[1]))
+        components.forEach { it.start() }
     }
 
     override fun update(dt: Float) {
         if (MouseListener.pressedButton(GLFW_MOUSE_BUTTON_LEFT)) {
             val gameObjectId: Int = GLFWWindow.objectIdMask.getObjectId(
-                MouseListener.screenX.toInt(),
-                MouseListener.screenY.toInt()
+                MouseListener.screenX.toInt(), MouseListener.screenY.toInt()
             )
             activeGameObject = Optional.ofNullable(gameObjects.find { it.id == gameObjectId })
         }

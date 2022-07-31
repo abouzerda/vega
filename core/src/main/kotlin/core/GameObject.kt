@@ -2,7 +2,12 @@ package core
 
 import component.Component
 
-class GameObject(val name: String, var transform: Transform = Transform(), var zIndex: Int = 0) {
+class GameObject(
+    val name: String,
+    var transform: Transform = Transform(),
+    var zIndex: Int = 0,
+    val transient: Boolean = false
+) {
     var id: Int = 0
 
     companion object {

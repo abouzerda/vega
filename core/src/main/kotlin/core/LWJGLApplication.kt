@@ -23,11 +23,6 @@ open class LWJGLApplication {
         GLFWWindow.close()
     }
 
-    fun showScene(scene: Scene) {
-        GLFWWindow.showScene(scene.apply {
-            load()
-            init()
-            start()
-        })
-    }
+    fun showScene(scene: Scene) = GLFWWindow.showScene(scene)
+
 }

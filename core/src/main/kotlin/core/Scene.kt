@@ -70,7 +70,7 @@ abstract class Scene {
 
     internal fun save() {
         with(File(SAVE_FILE_NAME)) {
-            val json = Utils.gson.toJson(gameObjects)
+            val json = Utils.gson.toJson(gameObjects.filter { !it.transient })
             writeText(json)
         }
     }

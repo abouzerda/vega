@@ -8,4 +8,8 @@ object Prefabs {
     fun generateSpriteObject(sprite: Sprite, sizeX: Float, sizeY: Float): GameObject = GameObject(
         "Sprite_Object_Gen", Transform(Vector2f(), Vector2f(sizeX, sizeY)), 0
     ).apply { addComponent<SpriteRenderer>(SpriteRenderer(sprite = sprite)) }
+
+    fun generateGizmoObject(sprite: Sprite, sizeX: Float, sizeY: Float): GameObject = GameObject(
+        "Gizmo_Object_Gen", Transform(Vector2f(), Vector2f(sizeX, sizeY)), 1, transient = true
+    ).apply { addComponent<SpriteRenderer>(SpriteRenderer(sprite = sprite)) }
 }

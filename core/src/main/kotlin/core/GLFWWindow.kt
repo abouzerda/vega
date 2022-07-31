@@ -33,6 +33,11 @@ object GLFWWindow {
 
     fun showScene(scene: Scene) {
         this.currentScene = scene
+        with(this.currentScene) {
+            load()
+            init()
+            start()
+        }
     }
 
     internal fun shouldClose(): Boolean = glfwWindowShouldClose(glfwWindowHandle)
@@ -68,6 +73,7 @@ object GLFWWindow {
         this.logger.info("OpenGL ${glGetString(GL_VERSION)?.split(' ')?.first()}!")
         /* Enable Alpha blending */
         glEnable(GL_BLEND)
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
         glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE)
         frameBuffer = FrameBuffer(1600, 900)
         objectIdMask = ObjectIdMask(1600, 900)
