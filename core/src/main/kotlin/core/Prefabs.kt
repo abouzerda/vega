@@ -2,6 +2,7 @@ package core
 
 import component.Sprite
 import component.SpriteRenderer
+import component.editor.NonPickable
 import org.joml.Vector2f
 
 object Prefabs {
@@ -11,5 +12,8 @@ object Prefabs {
 
     fun generateGizmoObject(sprite: Sprite, sizeX: Float, sizeY: Float): GameObject = GameObject(
         "Gizmo_Object_Gen", Transform(Vector2f(), Vector2f(sizeX, sizeY)), 1, transient = true
-    ).apply { addComponent<SpriteRenderer>(SpriteRenderer(sprite = sprite)) }
+    ).apply {
+        addComponent<SpriteRenderer>(SpriteRenderer(sprite = sprite))
+        addComponent<NonPickable>(NonPickable())
+    }
 }

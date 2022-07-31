@@ -25,6 +25,7 @@ class GameObject(
         return componentClass.cast(component)
     }
 
+    inline fun <reified T : Component> hasComponent(): Boolean = components.find { it is T } != null
     fun <T : Component> addComponent(component: Component) {
         component.generateId()
         component.gameObject = this

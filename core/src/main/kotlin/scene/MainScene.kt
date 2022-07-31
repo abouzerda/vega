@@ -1,9 +1,10 @@
 package scene
 
+import component.SpriteSheet
 import component.editor.CameraControls
 import component.editor.Grid
 import component.editor.MouseControls
-import component.SpriteSheet
+import component.editor.NonPickable
 import component.gizmo.TranslateGizmo
 import core.GLFWWindow
 import core.Scene
@@ -21,6 +22,21 @@ class MainScene : Scene() {
 
     private val components = mutableListOf(MouseControls, Grid, CameraControls(this.camera))
 
+    init {
+        onMousePress = { event ->
+            when (event.button) {
+                GLFW_MOUSE_BUTTON_LEFT -> {
+                    val gameObjectId: Int = GLFWWindow.objectIdMask.getObjectId(
+                        MouseListener.screenX.toInt(), MouseListener.screenY.toInt()
+                    )
+                    activeGameObject = Optional.ofNullable(
+                        gameObjects.filter { !it.hasComponent<NonPickable>() }.find { it.id == gameObjectId }
+                    )
+                }
+            }
+        }
+    }
+
     override fun init() {
         Assets.loadShader("/default.glsl")
         Assets.loadShader("/debug.glsl")
@@ -31,12 +47,6 @@ class MainScene : Scene() {
     }
 
     override fun update(dt: Float) {
-        if (MouseListener.pressedButton(GLFW_MOUSE_BUTTON_LEFT)) {
-            val gameObjectId: Int = GLFWWindow.objectIdMask.getObjectId(
-                MouseListener.screenX.toInt(), MouseListener.screenY.toInt()
-            )
-            activeGameObject = Optional.ofNullable(gameObjects.find { it.id == gameObjectId })
-        }
         camera.adjustProjection()
         components.forEach { it.update(dt) }
         for (gameObject in this.gameObjects) {
