@@ -1,5 +1,6 @@
-package component
+package component.editor
 
+import component.Component
 import core.Camera
 import core.GLFWWindow
 import org.joml.Vector2f

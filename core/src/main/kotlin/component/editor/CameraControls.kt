@@ -1,5 +1,6 @@
-package component
+package component.editor
 
+import component.Component
 import core.Camera
 import core.DELTA
 import io.KeyListener

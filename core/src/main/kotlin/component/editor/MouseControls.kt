@@ -1,5 +1,6 @@
-package component
+package component.editor
 
+import component.Component
 import core.GLFWWindow
 import core.GameObject
 import io.MouseListener

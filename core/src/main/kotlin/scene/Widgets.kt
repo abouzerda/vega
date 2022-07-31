@@ -1,6 +1,6 @@
 package scene
 
-import component.MouseControls
+import component.editor.MouseControls
 import component.SpriteSheet
 import core.GLFWWindow
 import core.GameObject

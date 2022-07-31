@@ -1,8 +1,8 @@
 package scene
 
-import component.CameraControls
-import component.Grid
-import component.MouseControls
+import component.editor.CameraControls
+import component.editor.Grid
+import component.editor.MouseControls
 import component.SpriteSheet
 import component.gizmo.TranslateGizmo
 import core.GLFWWindow
