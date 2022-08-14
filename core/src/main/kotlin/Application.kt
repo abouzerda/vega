@@ -1,8 +1,8 @@
-import core.LWJGLApplication
+import core.VegaApplication
 import core.Scene
 import scene.MainScene
 
-object Application : LWJGLApplication() {
+object Application : VegaApplication() {
     var scene: Scene = MainScene()
 
     init {
