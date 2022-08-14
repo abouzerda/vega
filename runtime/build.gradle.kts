@@ -13,18 +13,10 @@ repositories {
 
 dependencies {
     implementation(rootProject)
+    implementation(project(":core"))
     implementation(kotlin("stdlib-jdk8"))
     implementation("junit", "junit", "4.13.2")
     implementation("org.junit.jupiter", "junit-jupiter", "5.8.1")
-}
-
-tasks {
-    compileKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-    }
-    compileTestKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-    }
 }
 
 application {
