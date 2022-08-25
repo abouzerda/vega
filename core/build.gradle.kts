@@ -61,15 +61,6 @@ publishing {
     }
 }
 
-tasks {
-    compileKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-    }
-    compileTestKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-    }
-}
-
 application {
     mainClass.set("MainKt")
 }
