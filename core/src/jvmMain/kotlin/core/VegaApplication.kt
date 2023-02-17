@@ -4,7 +4,7 @@ import org.lwjgl.Version
 import org.lwjgl.glfw.GLFW
 import java.util.logging.Logger
 
-open class LWJGLApplication {
+open class VegaApplication {
     private val logger: Logger = Logger.getLogger(javaClass.name)
 
     init {

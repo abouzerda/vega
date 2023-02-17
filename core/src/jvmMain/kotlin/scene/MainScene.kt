@@ -17,8 +17,12 @@ import java.util.logging.Logger
 
 class MainScene : Scene() {
     val logger: Logger = Logger.getLogger(javaClass.name)
+
+    /* TODO: Load resources properly */
+    /*
     private val sprites: SpriteSheet
         get() = Assets.loadSpriteSheet("assets/images/frog.png")
+    */
 
     private val components = mutableListOf(MouseControls, Grid, CameraControls(this.camera))
 
@@ -59,7 +63,7 @@ class MainScene : Scene() {
     }
 
     override fun imgui() {
-        Widgets.showSprites(sprites)
+        //Widgets.showSprites(sprites)
         Widgets.showMouse()
         Widgets.showInspector()
     }

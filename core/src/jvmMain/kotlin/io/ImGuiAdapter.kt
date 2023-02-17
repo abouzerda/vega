@@ -54,10 +54,11 @@ class ImGuiAdapter(private var glfwWindowHandle: Long) {
             /* Fonts merge example */
             fontConfig.pixelSnapH = true
             /* Fonts from file/memory example */
-            fontAtlas.addFontFromFileTTF(IMGUI_FONT_FILE, IMGUI_FONT_SIZE, fontConfig)
+            /* TODO: Load resources properly */
+            //fontAtlas.addFontFromFileTTF(IMGUI_FONT_FILE, IMGUI_FONT_SIZE, fontConfig)
             /* After all fonts were added we don't need this config more */
             fontConfig.destroy()
-            ImGuiFreeType.buildFontAtlas(fontAtlas)
+            //ImGuiFreeType.buildFontAtlas(fontAtlas)
         }
         /* Set up key input callbacks */
         glfwSetKeyCallback(glfwWindowHandle, KeyListener::imGuiKeyCallback)
