@@ -1,2 +1,2 @@
 rootProject.name = "vega"
-include("editor", "runtime", "core")
+include("core")
